@@ -1,0 +1,47 @@
+using Commons.Persistence.Injection;
+using Commons.Persistence.Registrations;
+using Insure.Persistence.Context;
+using Insure.Persistence.Injection;
+using WatchDog;
+using WatchDog.src.Enums;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+builder.Services.AddPersistenceServices<ApplicationDbContext>(builder.Configuration, "Admin", "AdminLog");
+builder.Services.AddIdentityRegistration<ApplicationDbContext>(builder.Configuration);
+
+builder.Services.SwaggerGenRegistration(builder.Configuration);
+builder.Services.ApplyAllConfigurations(builder.Configuration);
+builder.Services.CommonDependencyInjectionService(builder.Configuration);
+builder.Services.FeaturesDependencyInjectionServices(builder.Configuration);
+builder.Services.RabbitMQElasticSearchDependencyInjectionService(builder.Configuration);
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
+        options.RoutePrefix = string.Empty;
+    });
+}
+app.UseWatchDogExceptionLogger();
+
+app.UseHttpsRedirection();
+
+app.UseAuthentication(); 
+app.UseAuthorization();
+app.UseWatchDog(opt =>
+{
+    opt.WatchPageUsername = "admin";
+    opt.WatchPagePassword = "1Admin++";
+
+});
+app.UseCors("CorsPolicy");
+
+app.MapControllers();
+app.Run();

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EFCore.BulkExtensions" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\EFK.Commons\Infrastructure\Commons.Persistence\Commons.Persistence.csproj" />
+    <ProjectReference Include="..\..\Core\InsureNet.Application\InsureNet.Application.csproj" />
+  </ItemGroup>
+
+</Project>
