@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Commons.Domain.Models.Role;
+using Microsoft.AspNetCore.Identity;
 
 namespace Commons.Domain.Models.User
 {
@@ -13,6 +14,8 @@ namespace Commons.Domain.Models.User
         public Guid RoleId { get; set; }
         public AppRole Role { get; set; }
         public ICollection<RefreshToken>? RefreshTokens { get; set; } = new List<RefreshToken>();
+        public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+        public ICollection<UserMenuPermission> UserMenuPermissions { get; set; } = new List<UserMenuPermission>();
 
     }
 }
