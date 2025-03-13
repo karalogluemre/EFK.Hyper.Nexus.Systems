@@ -23,8 +23,7 @@ namespace Commons.Application.Features.Commands.User.Create
         {
             var user = this.mapper.Map<AppUser>(request);
             user.PasswordHash = this.passwordHasher.HashPassword(user, request.Password);
-            await this.writeRepository.AddBulkAsync(new List<AppUser> { user });
-            return new BaseResponse { Succeeded = true, Message = "User registered successfully" };
+            return await this.writeRepository.AddBulkAsync(new List<AppUser> { user });
         }
     }
 }

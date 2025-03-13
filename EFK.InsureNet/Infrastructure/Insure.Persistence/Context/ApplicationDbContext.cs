@@ -20,6 +20,7 @@ namespace Insure.Persistence.Context
         #region DbSets
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<AppRole> AppRole { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         #endregion
     }
 }

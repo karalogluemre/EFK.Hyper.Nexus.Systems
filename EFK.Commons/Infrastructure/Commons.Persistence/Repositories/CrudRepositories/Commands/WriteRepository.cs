@@ -1,4 +1,5 @@
 ﻿using Commons.Application.Repositories.Commands;
+using Commons.Domain.Models;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -15,31 +16,13 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
         readonly private IElasticSearchWriteRepository<TContext, TEntity> elasticSearchRepository = elasticSearchRepository;
         private readonly IRabbitMQProducer rabbitMQProducer = rabbitMQProducer;
 
-        public async Task AddAsync(TEntity entity)
+        public async Task<BaseResponse> AddAsync(TEntity entity)
         {
-            await Table.AddAsync(entity);
-            await this.context.SaveChangesAsync();
-
             try
             {
-                await this.elasticSearchRepository.AddToElasticSearchAsync(entity);
-            }
-            catch (Exception)
-            {
-                var jsonData = JsonConvert.SerializeObject(entity);
-                var entityName = typeof(TEntity).Name;
-                this.rabbitMQProducer.Publish(jsonData, entityName);
-            }
-        }
+                await Table.AddAsync(entity);
+                await this.context.SaveChangesAsync();
 
-        public async Task AddBulkAsync(ICollection<TEntity> entities)
-        {
-            this.context.ChangeTracker.AutoDetectChangesEnabled = false;
-            await this.context.BulkInsertAsync(entities);
-            this.context.ChangeTracker.AutoDetectChangesEnabled = true;
-
-            foreach (var entity in entities)
-            {
                 try
                 {
                     await this.elasticSearchRepository.AddToElasticSearchAsync(entity);
@@ -50,23 +33,78 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
                     var entityName = typeof(TEntity).Name;
                     this.rabbitMQProducer.Publish(jsonData, entityName);
                 }
-            }
-        }
 
-        public async Task DeleteAsync(Guid id)
-        {
-            var entity = await this.Table.FindAsync(id);
-            if (entity != null)
+                return new BaseResponse { Succeeded = true, Message = "Kayıt başarıyla eklendi.", Data = entity };
+            }
+            catch (Exception ex)
             {
-                this.Table.Remove(entity);
-                await this.context.SaveChangesAsync();
+                return new BaseResponse { Succeeded = false, Message = $"Kayıt eklenirken hata oluştu: {ex.Message}" };
             }
         }
 
-        public async Task UpdateAsync(TEntity data)
+        public async Task<BaseResponse> AddBulkAsync(ICollection<TEntity> entities)
         {
-            this.Table.Update(data);
-            await this.context.SaveChangesAsync();
+            try
+            {
+                this.context.ChangeTracker.AutoDetectChangesEnabled = false;
+                await this.context.BulkInsertAsync(entities);
+                this.context.ChangeTracker.AutoDetectChangesEnabled = true;
+
+                foreach (var entity in entities)
+                {
+                    try
+                    {
+                        await this.elasticSearchRepository.AddToElasticSearchAsync(entity);
+                    }
+                    catch (Exception)
+                    {
+                        var jsonData = JsonConvert.SerializeObject(entity);
+                        var entityName = typeof(TEntity).Name;
+                        this.rabbitMQProducer.Publish(jsonData, entityName);
+                    }
+                }
+
+                return new BaseResponse { Succeeded = true, Message = $"{entities.Count} kayıt başarıyla eklendi.", Data = entities };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse { Succeeded = false, Message = $"Toplu kayıt eklenirken hata oluştu: {ex.Message}" };
+            }
+        }
+
+        public async Task<BaseResponse> DeleteAsync(Guid id)
+        {
+            try
+            {
+                var entity = await this.Table.FindAsync(id);
+                if (entity != null)
+                {
+                    this.Table.Remove(entity);
+                    await this.context.SaveChangesAsync();
+
+                    return new BaseResponse { Succeeded = true, Message = "Kayıt başarıyla silindi." };
+                }
+
+                return new BaseResponse { Succeeded = false, Message = "Silinecek kayıt bulunamadı." };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse { Succeeded = false, Message = $"Kayıt silinirken hata oluştu: {ex.Message}" };
+            }
+        }
+
+        public async Task<BaseResponse> UpdateAsync(TEntity data)
+        {
+            try
+            {
+                this.Table.Update(data);
+                await this.context.SaveChangesAsync();
+                return new BaseResponse { Succeeded = true, Message = "Kayıt başarıyla güncellendi.", Data = data };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse { Succeeded = false, Message = $"Kayıt güncellenirken hata oluştu: {ex.Message}" };
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using Commons.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Nest;
+using WatchDog;
 
 namespace Commons.Persistence.Repositories.CrudRepositories.Commands
 {
@@ -21,73 +22,99 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
            this.elasticClient = new ElasticClient(settings);
         }
 
-        public async Task AddToElasticSearchAsync(TEntity entity)
+        public async Task<BaseResponse> AddToElasticSearchAsync(TEntity entity)
         {
-            var response = await this.elasticClient.IndexDocumentAsync(entity);
-            if (!response.IsValid)
+            try
             {
-                throw new Exception($"Elasticsearch'e veri yazma başarısız. Hata: {response.OriginalException.Message}");
-            }
-        }
-        public async Task BulkAddToElasticSearchAsync(IEnumerable<TEntity> data)
-        {
-            var bulkDescriptor = new BulkDescriptor();
-
-            foreach (var entity in data)
-            {
-                bulkDescriptor.Index<TEntity>(op => op
-                    .Index(typeof(TEntity).Name.ToLower())
-                    .Id(new Id(entity))
-                    .Document(entity)
-                );
-            }
-
-            var response = await this.elasticClient.BulkAsync(bulkDescriptor);
-
-            // Eğer response'da "errors": false ise, hata yok demektir.
-            if (response.Errors)
-            {
-                Console.WriteLine("Elasticsearch Bulk Hata Detayları:");
-                foreach (var item in response.ItemsWithErrors)
+                var response = await this.elasticClient.IndexDocumentAsync(entity);
+                if (!response.IsValid)
                 {
-                    Console.WriteLine($"Hata: {item.Error.Reason}");
+                    var errorMessage = $"Elasticsearch'e veri yazma başarısız. Hata: {response.OriginalException?.Message}";
+                    WatchLogger.LogError(errorMessage);
+                    return new BaseResponse { Succeeded = false, Message = errorMessage };
                 }
 
-                throw new Exception("Elasticsearch Bulk işlemi sırasında hata oluştu!");
+                return new BaseResponse { Succeeded = true, Message = "Kayıt Elasticsearch'e başarıyla eklendi.", Data = entity };
+            }
+            catch (Exception ex)
+            {
+                WatchLogger.LogError($"Elasticsearch'e veri eklenirken hata oluştu: {ex.Message}");
+                return new BaseResponse { Succeeded = false, Message = $"Elasticsearch'e veri eklenirken hata oluştu: {ex.Message}" };
             }
         }
 
-        public async Task BulkDeleteFromElasticSearchAsync(IEnumerable<TEntity> data)
+        public async Task<BaseResponse> BulkAddToElasticSearchAsync(IEnumerable<TEntity> data)
         {
-            var bulkDescriptor = new BulkDescriptor();
-
-            foreach (var entity in data)
+            try
             {
-                bulkDescriptor.Delete<TEntity>(op => op
-                    .Index(typeof(TEntity).Name.ToLower()) // Doğru index ismi
-                    .Id(new Id(entity)) // Silinecek ID'yi belirle
-                );
-            }
+                var bulkDescriptor = new BulkDescriptor();
 
-            var response = await this.elasticClient.BulkAsync(bulkDescriptor);
-
-            // Eğer response'da "errors": false ise, hata yok demektir.
-            if (response.Errors)
-            {
-                Console.WriteLine("Elasticsearch Bulk Silme Hata Detayları:");
-                foreach (var item in response.ItemsWithErrors)
+                foreach (var entity in data)
                 {
-                    Console.WriteLine($"Hata: {item.Error.Reason}");
+                    bulkDescriptor.Index<TEntity>(op => op
+                        .Index(typeof(TEntity).Name.ToLower())
+                        .Id(new Id(entity))
+                        .Document(entity)
+                    );
                 }
 
-                throw new Exception("Elasticsearch Bulk Silme işlemi sırasında hata oluştu!");
+                var response = await this.elasticClient.BulkAsync(bulkDescriptor);
+
+                if (response.Errors)
+                {
+                    WatchLogger.LogError("Elasticsearch Bulk Hata Detayları:");
+                    foreach (var item in response.ItemsWithErrors)
+                    {
+                        WatchLogger.LogError($" Hata: {item.Error.Reason}");
+                    }
+
+                    return new BaseResponse { Succeeded = false, Message = "Elasticsearch Bulk işlemi sırasında hata oluştu!" };
+                }
+
+                return new BaseResponse { Succeeded = true, Message = $"{data.Count()} kayıt Elasticsearch'e başarıyla eklendi.", Data = data };
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"Elasticsearch'ten {data.Count()} kayıt başarıyla silindi.");
+                WatchLogger.LogError($"Elasticsearch Bulk ekleme sırasında hata oluştu: {ex.Message}");
+                return new BaseResponse { Succeeded = false, Message = $"Elasticsearch Bulk ekleme sırasında hata oluştu: {ex.Message}" };
             }
         }
 
+        public async Task<BaseResponse> BulkDeleteFromElasticSearchAsync(IEnumerable<TEntity> data)
+        {
+            try
+            {
+                var bulkDescriptor = new BulkDescriptor();
 
+                foreach (var entity in data)
+                {
+                    bulkDescriptor.Delete<TEntity>(op => op
+                        .Index(typeof(TEntity).Name.ToLower())
+                        .Id(new Id(entity))
+                    );
+                }
+
+                var response = await this.elasticClient.BulkAsync(bulkDescriptor);
+
+                if (response.Errors)
+                {
+                    WatchLogger.LogError("Elasticsearch Bulk Silme Hata Detayları:");
+                    foreach (var item in response.ItemsWithErrors)
+                    {
+                        WatchLogger.LogError($" Hata: {item.Error.Reason}");
+                    }
+
+                    return new BaseResponse { Succeeded = false, Message = "Elasticsearch Bulk Silme işlemi sırasında hata oluştu!" };
+                }
+
+                WatchLogger.Log($" Elasticsearch'ten {data.Count()} kayıt başarıyla silindi.");
+                return new BaseResponse { Succeeded = true, Message = $"{data.Count()} kayıt Elasticsearch'ten başarıyla silindi." };
+            }
+            catch (Exception ex)
+            {
+                WatchLogger.LogError($"Elasticsearch Bulk silme sırasında hata oluştu: {ex.Message}");
+                return new BaseResponse { Succeeded = false, Message = $"Elasticsearch Bulk silme sırasında hata oluştu: {ex.Message}" };
+            }
+        }
     }
 }

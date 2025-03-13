@@ -1,5 +1,6 @@
 ﻿using Commons.Application.Features.Commands.User.Create;
 using Commons.Application.Features.Queries.User;
+using Commons.Application.Token;
 using Commons.Domain.Models;
 using Insure.Persistence.Context;
 using MediatR;
@@ -13,8 +14,12 @@ namespace Insure.Persistence.Injection
         public static void FeaturesDependencyInjectionServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-            services.AddScoped<IRequestHandler<LoginUserQueryRequest, BaseResponse>, LoginUserQueryHandler>();
+
+            #region Users
+            services.AddScoped<GenerateJwtToken>();
+            services.AddScoped<IRequestHandler<LoginUserQueryRequest, BaseResponse>, LoginUserQueryHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<RegisterUserCommandRequest, BaseResponse>, RegisterUserCommandHandler<ApplicationDbContext>>();
+            #endregion
         }
     }
 }

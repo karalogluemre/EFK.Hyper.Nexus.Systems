@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Commons.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Commons.Application.Repositories.Commands
 {
@@ -6,9 +7,9 @@ namespace Commons.Application.Repositories.Commands
     where TContext : DbContext
     where TEntity : class
     {
-        Task AddToElasticSearchAsync(TEntity data);
-        Task BulkAddToElasticSearchAsync(IEnumerable<TEntity> data);
-        Task BulkDeleteFromElasticSearchAsync(IEnumerable<TEntity> data); 
+        Task<BaseResponse> AddToElasticSearchAsync(TEntity entity);
+        Task<BaseResponse> BulkAddToElasticSearchAsync(IEnumerable<TEntity> data);
+        Task<BaseResponse> BulkDeleteFromElasticSearchAsync(IEnumerable<TEntity> data); 
 
     }
 }

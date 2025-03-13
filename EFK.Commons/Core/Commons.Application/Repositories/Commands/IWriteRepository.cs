@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Commons.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Commons.Application.Repositories.Commands
 {
@@ -6,9 +7,9 @@ namespace Commons.Application.Repositories.Commands
     where TContext : DbContext
     where TEntity : class
     {
-        Task AddAsync(TEntity data);
-        Task AddBulkAsync(ICollection<TEntity> datas);
-        Task UpdateAsync(TEntity data);
-        Task DeleteAsync(Guid id);
+        Task<BaseResponse> AddAsync(TEntity entity);
+        Task<BaseResponse> AddBulkAsync(ICollection<TEntity> entities);
+        Task<BaseResponse> UpdateAsync(TEntity data);
+        Task<BaseResponse> DeleteAsync(Guid id);
     }
 }
