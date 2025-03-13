@@ -1,5 +1,6 @@
 ﻿using Commons.Application.Abstract.Authorization;
 using Commons.Domain.Message;
+using Commons.Domain.Models.Role;
 using Commons.Domain.Models.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

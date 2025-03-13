@@ -1,4 +1,5 @@
-﻿using Commons.Domain.Models.User;
+﻿using Commons.Domain.Models.Role;
+using Commons.Domain.Models.User;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

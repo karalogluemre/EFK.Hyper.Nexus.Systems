@@ -1,4 +1,5 @@
 ﻿using Commons.Application.Repositories.Commands;
+using Commons.Domain.Models.Role;
 using Commons.Domain.Models.User;
 using Commons.Persistence.Repositories.CrudRepositories.Commands;
 using Insure.Persistence.Context;
