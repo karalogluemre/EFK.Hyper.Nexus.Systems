@@ -1,4 +1,6 @@
-﻿using Commons.Application.Features.Commands.User.Create;
+﻿using Commons.Application.Features.Commands.Menu.Create;
+using Commons.Application.Features.Commands.User.Create;
+using Commons.Application.Features.Queries.Menu;
 using Commons.Application.Features.Queries.User;
 using Commons.Application.Token;
 using Commons.Domain.Models;
@@ -19,6 +21,12 @@ namespace Insure.Persistence.Injection
             services.AddScoped<GenerateJwtToken>();
             services.AddScoped<IRequestHandler<LoginUserQueryRequest, BaseResponse>, LoginUserQueryHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<RegisterUserCommandRequest, BaseResponse>, RegisterUserCommandHandler<ApplicationDbContext>>();
+            #endregion
+
+            #region Menu
+            services.AddScoped<IRequestHandler<CreateMenuCommandRequest, BaseResponse>, CreateMenuCommandHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<GetAllMenuQueryRequest, List<Commons.Domain.Models.Menus.Menu>>, GetAllMenuQueryHandler<ApplicationDbContext>>();
+
             #endregion
         }
     }

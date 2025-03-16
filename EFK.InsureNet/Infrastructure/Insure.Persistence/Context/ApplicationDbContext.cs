@@ -44,7 +44,10 @@ namespace Insure.Persistence.Context
         public DbSet<Unit> Units { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<UserMenuPermission> UserMenuPermissions { get; set; }
-
+        public DbSet<UserDepartment> UserDepartments { get; set; }
+        public DbSet<UserOrganization> UserOrganizations { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<UserUnit> UserUnits { get; set; }
         #endregion
     }
 }

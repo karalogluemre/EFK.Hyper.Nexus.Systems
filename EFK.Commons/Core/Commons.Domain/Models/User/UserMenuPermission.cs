@@ -4,7 +4,7 @@ namespace Commons.Domain.Models.User
 {
     public class UserMenuPermission
     {
-        public Guid UserId { get; set; }
+        public Guid AppUserId { get; set; }
         public AppUser AppUser { get; set; }
 
         public Guid MenuId { get; set; }

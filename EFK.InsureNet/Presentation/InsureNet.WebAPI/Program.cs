@@ -19,6 +19,7 @@ builder.Services.FeaturesDependencyInjectionServices(builder.Configuration);
 builder.Services.RabbitMQElasticSearchDependencyInjectionService(builder.Configuration);
 
 var app = builder.Build();
+app.UseCors("CorsPolicy");
 
 if (app.Environment.IsDevelopment())
 {
@@ -41,7 +42,6 @@ app.UseWatchDog(opt =>
     opt.WatchPagePassword = "1Admin++";
 
 });
-app.UseCors("CorsPolicy");
 
 app.MapControllers();
 app.Run();

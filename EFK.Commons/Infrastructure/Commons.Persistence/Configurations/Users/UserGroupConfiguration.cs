@@ -16,7 +16,7 @@ namespace Commons.Persistence.Configurations.Users
                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(ug => ug.Group)
-                   .WithMany()
+                   .WithMany(x=>x.UserGroups)
                    .HasForeignKey(ug => ug.GroupId)
                    .OnDelete(DeleteBehavior.Cascade);
         }

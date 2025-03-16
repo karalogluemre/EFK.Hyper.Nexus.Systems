@@ -1,5 +1,4 @@
-﻿using Commons.Domain.Models.Role;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Commons.Domain.Models.User
 {
@@ -18,7 +17,5 @@ namespace Commons.Domain.Models.User
         public ICollection<UserGroup> UserGroups { get; set; } = new List<UserGroup>();
         public ICollection<UserDepartment> UserDepartments { get; set; } = new List<UserDepartment>();
         public ICollection<UserUnit> UserUnits { get; set; } = new List<UserUnit>();
-
-
     }
 }
