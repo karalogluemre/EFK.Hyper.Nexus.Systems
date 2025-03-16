@@ -9,11 +9,6 @@ namespace Commons.Persistence.Configurations.Users
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
 
-            builder
-                .HasOne(u => u.Role)
-                .WithMany(r => r.Users)
-                .HasForeignKey(u => u.RoleId)
-                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasMany(rt => rt.RefreshTokens)
