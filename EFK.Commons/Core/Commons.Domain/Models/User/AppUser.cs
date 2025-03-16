@@ -11,11 +11,14 @@ namespace Commons.Domain.Models.User
         public string IdentityNumber { get; set; }
         public string PlaceOfBirth { get; set; } //Doğum Yeri
         public string BloodGroup { get; set; }
-        public Guid RoleId { get; set; }
-        public AppRole Role { get; set; }
         public ICollection<RefreshToken>? RefreshTokens { get; set; } = new List<RefreshToken>();
         public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
         public ICollection<UserMenuPermission> UserMenuPermissions { get; set; } = new List<UserMenuPermission>();
+        public ICollection<UserOrganization> UserOrganizations { get; set; } = new List<UserOrganization>();
+        public ICollection<UserGroup> UserGroups { get; set; } = new List<UserGroup>();
+        public ICollection<UserDepartment> UserDepartments { get; set; } = new List<UserDepartment>();
+        public ICollection<UserUnit> UserUnits { get; set; } = new List<UserUnit>();
+
 
     }
 }
