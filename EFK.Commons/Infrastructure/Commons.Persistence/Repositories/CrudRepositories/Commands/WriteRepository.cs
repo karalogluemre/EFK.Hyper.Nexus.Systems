@@ -139,17 +139,35 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
             }
         }
 
-        public async Task<BaseResponse> UpdateAsync(TEntity data)
+        public async Task<BaseResponse> UpdateBulkAsync(ICollection<TEntity> entities)
         {
             try
             {
-                this.Table.Update(data);
-                await this.context.SaveChangesAsync();
-                return new BaseResponse { Succeeded = true, Message = "Kayıt başarıyla güncellendi.", Data = data };
+                this.context.ChangeTracker.AutoDetectChangesEnabled = false;
+                await this.context.BulkUpdateAsync(entities);
+                this.context.ChangeTracker.AutoDetectChangesEnabled = true;
+
+                try
+                {
+                    // Elasticsearch'te de güncelleme yap
+                    await this.elasticSearchRepository.BulkUpdateToElasticSearchAsync(entities);
+                }
+                catch (Exception)
+                {
+                    // Elasticsearch kapalıysa RabbitMQ'ya mesaj gönder
+                    foreach (var entity in entities)
+                    {
+                        var jsonData = JsonConvert.SerializeObject(entity);
+                        var entityName = typeof(TEntity).Name;
+                        this.rabbitMQProducer.Publish(jsonData, entityName);
+                    }
+                }
+
+                return new BaseResponse { Succeeded = true, Message = $"{entities.Count} kayıt başarıyla güncellendi.", Data = entities };
             }
             catch (Exception ex)
             {
-                return new BaseResponse { Succeeded = false, Message = $"Kayıt güncellenirken hata oluştu: {ex.Message}" };
+                return new BaseResponse { Succeeded = false, Message = $"Toplu kayıt güncellenirken hata oluştu: {ex.Message}" };
             }
         }
     }

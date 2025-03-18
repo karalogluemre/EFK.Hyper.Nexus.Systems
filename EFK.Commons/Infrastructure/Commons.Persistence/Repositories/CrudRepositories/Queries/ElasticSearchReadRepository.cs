@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Nest;
+using System.Reflection;
 
 namespace Commons.Persistence.Repositories.CrudRepositories.Queries
 {
@@ -31,6 +32,24 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Queries
             );
 
             return response.Documents.ToList();
+        }
+
+        public async Task<List<TEntity>> GetSortedMenusFromElasticSearchAsync()
+        {
+            var response = await this.elasticClient.SearchAsync<TEntity>(s => s
+                .Index(typeof(TEntity).Name.ToLower())
+                .Query(q => q.MatchAll())
+                .Sort(ss => ss.Ascending("key")) 
+                .Size(1000)
+            );
+
+            return response.Documents.DistinctBy(GetId).ToList();
+        }
+        private static Guid GetId(object entity)
+        {
+            // Eğer entity'nin "id" özelliği varsa onu al, yoksa Guid.Empty döndür
+            return (Guid)(entity.GetType().GetProperty("id", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance)
+                ?.GetValue(entity, null) ?? Guid.Empty);
         }
     }
 

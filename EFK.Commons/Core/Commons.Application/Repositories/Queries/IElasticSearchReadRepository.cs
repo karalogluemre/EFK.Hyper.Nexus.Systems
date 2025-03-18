@@ -8,6 +8,7 @@ namespace Commons.Application.Repositories.Queries
     where TEntity : class
     {
         Task<List<TEntity>> GetAllFromElasticSearchAsync();
+        Task<List<TEntity>> GetSortedMenusFromElasticSearchAsync();
 
     }
 }

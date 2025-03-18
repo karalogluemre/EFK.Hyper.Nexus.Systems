@@ -19,7 +19,7 @@ namespace InsureNet.WebAPI.Controllers.Menu
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> MenuUpload(CreateMenuCommandRequest  createMenuCommandRequest)
+        public async Task<IActionResult> MenuUpload(CreateMenuCommandRequest createMenuCommandRequest)
         {
             BaseResponse response = await this.mediator.Send(createMenuCommandRequest);
             return Ok(response);

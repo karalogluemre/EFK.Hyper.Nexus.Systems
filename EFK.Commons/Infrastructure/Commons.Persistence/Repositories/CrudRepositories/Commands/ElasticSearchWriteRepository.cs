@@ -12,7 +12,6 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
         where TEntity : class
     {
         private readonly ElasticClient elasticClient;
-        private readonly TContext context;
 
         public ElasticSearchWriteRepository(IConfiguration configuration)
         {
@@ -26,6 +25,7 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
         {
             try
             {
+
                 var response = await this.elasticClient.IndexDocumentAsync(entity);
                 if (!response.IsValid)
                 {
@@ -59,6 +59,8 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
                 }
 
                 var response = await this.elasticClient.BulkAsync(bulkDescriptor);
+                await Task.Delay(500);
+
 
                 if (response.Errors)
                 {
@@ -77,6 +79,44 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
             {
                 WatchLogger.LogError($"Elasticsearch Bulk ekleme sırasında hata oluştu: {ex.Message}");
                 return new BaseResponse { Succeeded = false, Message = $"Elasticsearch Bulk ekleme sırasında hata oluştu: {ex.Message}" };
+            }
+        }
+        public async Task<BaseResponse> BulkUpdateToElasticSearchAsync(IEnumerable<TEntity> data)
+        {
+            try
+            {
+                var bulkDescriptor = new BulkDescriptor();
+
+                foreach (var entity in data)
+                {
+                    bulkDescriptor.Update<TEntity>(op => op
+                        .Index(typeof(TEntity).Name.ToLower()) // İlgili index
+                        .Id(new Id(entity)) // ID'yi kullanarak güncelleme yap
+                        .Doc(entity) // Güncellenecek veri
+                        .DocAsUpsert(true) // Eğer yoksa ekle
+                    );
+                }
+
+                var response = await this.elasticClient.BulkAsync(bulkDescriptor);
+                await Task.Delay(500);
+
+                if (response.Errors)
+                {
+                    WatchLogger.LogError("Elasticsearch Bulk Güncelleme Hata Detayları:");
+                    foreach (var item in response.ItemsWithErrors)
+                    {
+                        WatchLogger.LogError($" Hata: {item.Error.Reason}");
+                    }
+
+                    return new BaseResponse { Succeeded = false, Message = "Elasticsearch Bulk Güncelleme işlemi sırasında hata oluştu!" };
+                }
+
+                return new BaseResponse { Succeeded = true, Message = $"{data.Count()} kayıt Elasticsearch'te başarıyla güncellendi.", Data = data };
+            }
+            catch (Exception ex)
+            {
+                WatchLogger.LogError($"Elasticsearch Bulk Güncelleme sırasında hata oluştu: {ex.Message}");
+                return new BaseResponse { Succeeded = false, Message = $"Elasticsearch Bulk Güncelleme sırasında hata oluştu: {ex.Message}" };
             }
         }
 
