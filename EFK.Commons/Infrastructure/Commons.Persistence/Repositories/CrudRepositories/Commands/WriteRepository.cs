@@ -46,9 +46,22 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
         {
             try
             {
+                // Boş olan ID'leri otomatik doldur
+                foreach (var entity in entities)
+                {
+                    var propertyInfo = entity.GetType().GetProperty("Id");
+                    if (propertyInfo != null)
+                    {
+                        var currentId = (Guid)propertyInfo.GetValue(entity);
+                        if (currentId == Guid.Empty)
+                        {
+                            propertyInfo.SetValue(entity, Guid.NewGuid());
+                        }
+                    }
+                }
+
                 this.context.ChangeTracker.AutoDetectChangesEnabled = false;
 
-                // Ana nesneleri ekleyelim
                 await this.context.BulkInsertAsync(entities);
 
                 // İç içe geçmiş ilişkili koleksiyonları topla
@@ -64,6 +77,8 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
                 {
                     await this.context.BulkInsertAsync(subEntities);
                 }
+                await this.context.SaveChangesAsync();
+
 
                 this.context.ChangeTracker.AutoDetectChangesEnabled = true;
 
@@ -123,21 +138,61 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
             try
             {
                 var entity = await this.Table.FindAsync(id);
-                if (entity != null)
+                if (entity == null)
                 {
-                    this.Table.Remove(entity);
-                    await this.context.SaveChangesAsync();
-
-                    return new BaseResponse { Succeeded = true, Message = "Kayıt başarıyla silindi." };
+                    return new BaseResponse
+                    {
+                        Succeeded = false,
+                        Message = "Silinecek kayıt bulunamadı."
+                    };
                 }
 
-                return new BaseResponse { Succeeded = false, Message = "Silinecek kayıt bulunamadı." };
+                // Soft delete işlemi
+                var isDeletedProp = entity.GetType().GetProperty("IsDeleted");
+                if (isDeletedProp != null)
+                {
+                    isDeletedProp.SetValue(entity, true);
+                }
+
+                // UpdatedDate ayarı
+                var updatedDateProp = entity.GetType().GetProperty("UpdatedDate");
+                if (updatedDateProp != null)
+                {
+                    updatedDateProp.SetValue(entity, DateTime.UtcNow);
+                }
+
+                this.context.Update(entity);
+                await this.context.SaveChangesAsync();
+
+                try
+                {
+                    // Elasticsearch üzerinde de güncelleme yap (soft delete yansıtılması için)
+                    await this.elasticSearchRepository.BulkUpdateToElasticSearchAsync(new List<TEntity> { entity });
+                }
+                catch (Exception)
+                {
+                    var jsonData = JsonConvert.SerializeObject(entity);
+                    var entityName = typeof(TEntity).Name;
+                    this.rabbitMQProducer.Publish(jsonData, entityName);
+                }
+
+                return new BaseResponse
+                {
+                    Succeeded = true,
+                    Message = "Kayıt başarıyla silindi.",
+                    Data = entity
+                };
             }
             catch (Exception ex)
             {
-                return new BaseResponse { Succeeded = false, Message = $"Kayıt silinirken hata oluştu: {ex.Message}" };
+                return new BaseResponse
+                {
+                    Succeeded = false,
+                    Message = $"Kayıt silinirken hata oluştu: {ex.Message}"
+                };
             }
         }
+
 
         public async Task<BaseResponse> UpdateBulkAsync(ICollection<TEntity> entities)
         {

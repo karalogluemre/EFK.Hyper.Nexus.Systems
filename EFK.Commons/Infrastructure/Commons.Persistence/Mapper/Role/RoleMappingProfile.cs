@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Commons.Application.Features.Commands.Role.Create;
+using Commons.Application.Features.Commands.Role.Update;
 using Commons.Domain.Models.Role;
 
 namespace Commons.Persistence.Mapper.Role

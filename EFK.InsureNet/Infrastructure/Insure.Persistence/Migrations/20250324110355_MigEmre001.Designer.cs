@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Insure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250317112611_MigEmre001")]
+    [Migration("20250324110355_MigEmre001")]
     partial class MigEmre001
     {
         /// <inheritdoc />

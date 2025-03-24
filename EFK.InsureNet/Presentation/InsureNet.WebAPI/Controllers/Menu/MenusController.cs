@@ -11,6 +11,7 @@ namespace InsureNet.WebAPI.Controllers.Menu
     public class MenusController(IMediator mediator) : ControllerBase
     {
         readonly IMediator mediator = mediator;
+
         [HttpPost("[action]")]
         public async Task<IActionResult> GetAllMenu()
         {

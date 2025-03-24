@@ -5,7 +5,7 @@ using Commons.Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Commons.Application.Features.Commands.Role.Create
+namespace Commons.Application.Features.Commands.Role.Update
 {
     public class UpdateRoleCommandHandler<TDbContext>(
         IWriteRepository<TDbContext, AppRole> writeRepository,
@@ -16,8 +16,8 @@ namespace Commons.Application.Features.Commands.Role.Create
         readonly private IMapper mapper = mapper;
         public async Task<BaseResponse> Handle(UpdateRoleCommandRequest request, CancellationToken cancellationToken)
         {
-            var role = this.mapper.Map<AppRole>(request);
-            return await this.writeRepository.UpdateBulkAsync(new List<AppRole> { role });
+            var role = mapper.Map<AppRole>(request);
+            return await writeRepository.UpdateBulkAsync(new List<AppRole> { role });
         }
     }
 }

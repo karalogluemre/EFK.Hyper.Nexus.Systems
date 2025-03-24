@@ -125,7 +125,7 @@
       "id": "4b2de819-3097-4463-8bb8-3315086da6b1",
       "menuId": "4b2de819-3097-4463-8bb8-3315086da2b0",
       "icon": "pi pi-users",
-      "routerLink": "/insan-kaynaklari",
+      "routerLink": "",
       "items": [
         {
           "key": "1_1",
@@ -133,7 +133,7 @@
           "id": "3dcfd8b2-cc90-4524-8291-fe184db2173a",
           "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
           "icon": "pi pi-chart-line",
-          "routerLink": "/insan-kaynaklari/yonetim-paneli",
+          "routerLink": "",
           "items": [
             {
               "key": "1_1_0",
@@ -167,7 +167,7 @@
           "id": "b47ee8ab-12d6-4758-b697-89be47d19eb4",
           "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
           "icon": "pi pi-id-card",
-          "routerLink": "/calisan-yonetimi",
+          "routerLink": "",
           "items": [
             {
               "key": "1_2_0",
@@ -225,7 +225,7 @@
           "id": "66d90194-9bd0-4f32-9452-08c079200f38",
           "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
           "icon": "pi pi-briefcase",
-          "routerLink": "/ise-alim",
+          "routerLink": "",
           "items": [
             {
               "key": "1_3_0",
@@ -275,7 +275,7 @@
           "id": "4285d6b5-8000-422d-960b-ca5c95db29e2",
           "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
           "icon": "pi pi-money-bill",
-          "routerLink": "/bordro-maas-yonetimi",
+          "routerLink": "",
           "items": [
             {
               "key": "1_4_0",
@@ -333,7 +333,7 @@
           "id": "49d68516-1891-459b-945b-22ef63b4aa8e",
           "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
           "icon": "pi pi-calendar-minus",
-          "routerLink": "/izin-devamsizlik-yonetimi",
+          "routerLink": "",
           "items": [
             {
               "key": "1_5_0",
@@ -383,7 +383,7 @@
           "id": "485686f2-95a7-418a-a335-5d61fbf0109c",
           "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
           "icon": "pi pi-star",
-          "routerLink": "/performans-kariyer-yonetimi",
+          "routerLink": "",
           "items": [
             {
               "key": "1_6_0",
@@ -433,7 +433,7 @@
           "id": "4ec1b707-195f-4b5d-b358-ac380f4a948b",
           "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
           "icon": "pi pi-book",
-          "routerLink": "/egitim-gelisim-yonetimi",
+          "routerLink": "",
           "items": [
             {
               "key": "1_7_0",
@@ -483,7 +483,7 @@
           "id": "12595a5c-8bf4-4b19-9d33-f505d7be117f",
           "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
           "icon": "pi pi-shield",
-          "routerLink": "/isg-yonetimi",
+          "routerLink": "",
           "items": [
             {
               "key": "1_8_0",
@@ -533,7 +533,7 @@
           "id": "2213a795-ac9c-4a7d-9410-6b444d3356d8",
           "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
           "icon": "pi pi-gift",
-          "routerLink": "/yan-haklar",
+          "routerLink": "",
           "items": [
             {
               "key": "1_9_0",
@@ -583,7 +583,7 @@
           "id": "df0bbfa2-1dfa-41ed-9b2e-7cceadd99418",
           "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
           "icon": "pi pi-exclamation-triangle",
-          "routerLink": "/disiplin-uyari",
+          "routerLink": "",
           "items": [
             {
               "key": "1_10_0",
@@ -625,7 +625,7 @@
           "id": "103002f7-df96-4a29-a25b-78e6a2fc5145",
           "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
           "icon": "pi pi-chart-bar",
-          "routerLink": "/raporlama-analitik",
+          "routerLink": "",
           "items": [
             {
               "key": "1_11_0",
