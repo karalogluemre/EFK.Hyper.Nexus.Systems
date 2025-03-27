@@ -61,6 +61,13 @@ namespace Insure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Label = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RouterLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Target = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
@@ -70,6 +77,11 @@ namespace Insure.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Menu", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Menu_Menu_MenuId",
+                        column: x => x.MenuId,
+                        principalTable: "Menu",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -226,27 +238,21 @@ namespace Insure.Persistence.Migrations
                 name: "UserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AppRoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRoles", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_UserRoles", x => new { x.AppUserId, x.AppRoleId });
                     table.ForeignKey(
-                        name: "FK_UserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
+                        name: "FK_UserRoles_AspNetRoles_AppRoleId",
+                        column: x => x.AppRoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserRoles_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_UserRoles_AspNetUsers_UserId",
-                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -290,25 +296,19 @@ namespace Insure.Persistence.Migrations
                 name: "UserMenuPermissions",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CanCreate = table.Column<bool>(type: "bit", nullable: false),
                     CanRead = table.Column<bool>(type: "bit", nullable: false),
                     CanUpdate = table.Column<bool>(type: "bit", nullable: false),
-                    CanDelete = table.Column<bool>(type: "bit", nullable: false),
-                    AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    CanDelete = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserMenuPermissions", x => new { x.UserId, x.MenuId });
+                    table.PrimaryKey("PK_UserMenuPermissions", x => new { x.AppUserId, x.MenuId });
                     table.ForeignKey(
                         name: "FK_UserMenuPermissions_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_UserMenuPermissions_AspNetUsers_UserId",
-                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -395,8 +395,7 @@ namespace Insure.Persistence.Migrations
                 columns: table => new
                 {
                     BranchId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BranchId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -407,11 +406,6 @@ namespace Insure.Persistence.Migrations
                         principalTable: "Branches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BranchMenus_Branches_BranchId1",
-                        column: x => x.BranchId1,
-                        principalTable: "Branches",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_BranchMenus_Menu_MenuId",
                         column: x => x.MenuId,
@@ -471,8 +465,7 @@ namespace Insure.Persistence.Migrations
                 columns: table => new
                 {
                     OrganizationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrganizationId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -489,15 +482,10 @@ namespace Insure.Persistence.Migrations
                         principalTable: "Organizations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrganizationMenus_Organizations_OrganizationId1",
-                        column: x => x.OrganizationId1,
-                        principalTable: "Organizations",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserOrganization",
+                name: "UserOrganizations",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -505,15 +493,15 @@ namespace Insure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserOrganization", x => new { x.UserId, x.OrganizationId });
+                    table.PrimaryKey("PK_UserOrganizations", x => new { x.UserId, x.OrganizationId });
                     table.ForeignKey(
-                        name: "FK_UserOrganization_AspNetUsers_UserId",
+                        name: "FK_UserOrganizations_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserOrganization_Organizations_OrganizationId",
+                        name: "FK_UserOrganizations_Organizations_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organizations",
                         principalColumn: "Id",
@@ -544,7 +532,7 @@ namespace Insure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserGroup",
+                name: "UserGroups",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -552,15 +540,15 @@ namespace Insure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserGroup", x => new { x.UserId, x.GroupId });
+                    table.PrimaryKey("PK_UserGroups", x => new { x.UserId, x.GroupId });
                     table.ForeignKey(
-                        name: "FK_UserGroup_AspNetUsers_UserId",
+                        name: "FK_UserGroups_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserGroup_Groups_GroupId",
+                        name: "FK_UserGroups_Groups_GroupId",
                         column: x => x.GroupId,
                         principalTable: "Groups",
                         principalColumn: "Id",
@@ -591,7 +579,7 @@ namespace Insure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserDepartment",
+                name: "UserDepartments",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -599,15 +587,15 @@ namespace Insure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserDepartment", x => new { x.UserId, x.DepartmentId });
+                    table.PrimaryKey("PK_UserDepartments", x => new { x.UserId, x.DepartmentId });
                     table.ForeignKey(
-                        name: "FK_UserDepartment_AspNetUsers_UserId",
+                        name: "FK_UserDepartments_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserDepartment_Departments_DepartmentId",
+                        name: "FK_UserDepartments_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
                         principalColumn: "Id",
@@ -615,7 +603,7 @@ namespace Insure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserUnit",
+                name: "UserUnits",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -623,15 +611,15 @@ namespace Insure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserUnit", x => new { x.UserId, x.UnitId });
+                    table.PrimaryKey("PK_UserUnits", x => new { x.UserId, x.UnitId });
                     table.ForeignKey(
-                        name: "FK_UserUnit_AspNetUsers_UserId",
+                        name: "FK_UserUnits_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserUnit_Units_UnitId",
+                        name: "FK_UserUnits_Units_UnitId",
                         column: x => x.UnitId,
                         principalTable: "Units",
                         principalColumn: "Id",
@@ -683,11 +671,6 @@ namespace Insure.Persistence.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BranchMenus_BranchId1",
-                table: "BranchMenus",
-                column: "BranchId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_BranchMenus_MenuId",
                 table: "BranchMenus",
                 column: "MenuId");
@@ -708,14 +691,14 @@ namespace Insure.Persistence.Migrations
                 column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrganizationMenus_MenuId",
-                table: "OrganizationMenus",
+                name: "IX_Menu_MenuId",
+                table: "Menu",
                 column: "MenuId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrganizationMenus_OrganizationId1",
+                name: "IX_OrganizationMenus_MenuId",
                 table: "OrganizationMenus",
-                column: "OrganizationId1");
+                column: "MenuId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Organizations_BranchId",
@@ -748,19 +731,14 @@ namespace Insure.Persistence.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserDepartment_DepartmentId",
-                table: "UserDepartment",
+                name: "IX_UserDepartments_DepartmentId",
+                table: "UserDepartments",
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserGroup_GroupId",
-                table: "UserGroup",
+                name: "IX_UserGroups_GroupId",
+                table: "UserGroups",
                 column: "GroupId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserMenuPermissions_AppUserId",
-                table: "UserMenuPermissions",
-                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserMenuPermissions_MenuId",
@@ -768,23 +746,18 @@ namespace Insure.Persistence.Migrations
                 column: "MenuId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserOrganization_OrganizationId",
-                table: "UserOrganization",
+                name: "IX_UserOrganizations_OrganizationId",
+                table: "UserOrganizations",
                 column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRoles_AppUserId",
+                name: "IX_UserRoles_AppRoleId",
                 table: "UserRoles",
-                column: "AppUserId");
+                column: "AppRoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRoles_RoleId",
-                table: "UserRoles",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserUnit_UnitId",
-                table: "UserUnit",
+                name: "IX_UserUnits_UnitId",
+                table: "UserUnits",
                 column: "UnitId");
         }
 
@@ -822,22 +795,22 @@ namespace Insure.Persistence.Migrations
                 name: "RoleMenuPermission");
 
             migrationBuilder.DropTable(
-                name: "UserDepartment");
+                name: "UserDepartments");
 
             migrationBuilder.DropTable(
-                name: "UserGroup");
+                name: "UserGroups");
 
             migrationBuilder.DropTable(
                 name: "UserMenuPermissions");
 
             migrationBuilder.DropTable(
-                name: "UserOrganization");
+                name: "UserOrganizations");
 
             migrationBuilder.DropTable(
                 name: "UserRoles");
 
             migrationBuilder.DropTable(
-                name: "UserUnit");
+                name: "UserUnits");
 
             migrationBuilder.DropTable(
                 name: "Menu");

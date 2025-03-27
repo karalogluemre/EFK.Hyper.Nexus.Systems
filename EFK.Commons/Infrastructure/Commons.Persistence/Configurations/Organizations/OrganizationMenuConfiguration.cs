@@ -11,12 +11,12 @@ namespace Commons.Persistence.Configurations.Organizations
             builder.HasKey(om => new { om.OrganizationId, om.MenuId });
 
             builder.HasOne(om => om.Organization)
-                   .WithMany()
+                   .WithMany(x=>x.OrganizationMenus)
                    .HasForeignKey(om => om.OrganizationId)
                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(om => om.Menu)
-                   .WithMany()
+                   .WithMany(x=>x.OrganizationMenus)
                    .HasForeignKey(om => om.MenuId)
                    .OnDelete(DeleteBehavior.Cascade);
         }

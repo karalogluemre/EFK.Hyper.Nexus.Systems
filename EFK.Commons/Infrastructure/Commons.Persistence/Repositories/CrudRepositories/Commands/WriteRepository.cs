@@ -46,10 +46,43 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
         {
             try
             {
+                // Boş olan ID'leri otomatik doldur
+                foreach (var entity in entities)
+                {
+                    var propertyInfo = entity.GetType().GetProperty("Id");
+                    if (propertyInfo != null)
+                    {
+                        var currentId = (Guid)propertyInfo.GetValue(entity);
+                        if (currentId == Guid.Empty)
+                        {
+                            propertyInfo.SetValue(entity, Guid.NewGuid());
+                        }
+                    }
+                }
+
                 this.context.ChangeTracker.AutoDetectChangesEnabled = false;
+
                 await this.context.BulkInsertAsync(entities);
+
+                // İç içe geçmiş ilişkili koleksiyonları topla
+                var subEntities = new List<TEntity>();
+
+                foreach (var entity in entities)
+                {
+                    CollectNestedEntities(entity, subEntities);
+                }
+
+                // Eğer alt nesneler varsa onları da ekle
+                if (subEntities.Any())
+                {
+                    await this.context.BulkInsertAsync(subEntities);
+                }
+                await this.context.SaveChangesAsync();
+
+
                 this.context.ChangeTracker.AutoDetectChangesEnabled = true;
 
+                // Elasticsearch'e ekleme
                 foreach (var entity in entities)
                 {
                     try
@@ -71,39 +104,170 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
                 return new BaseResponse { Succeeded = false, Message = $"Toplu kayıt eklenirken hata oluştu: {ex.Message}" };
             }
         }
+        private void CollectNestedEntities(object entity, List<TEntity> subEntities)
+        {
+            if (entity == null)
+                return;
+
+            var entityType = entity.GetType();
+            var properties = entityType.GetProperties();
+
+            foreach (var prop in properties)
+            {
+                if (prop.PropertyType.IsGenericType && typeof(ICollection<>).IsAssignableFrom(prop.PropertyType.GetGenericTypeDefinition()))
+                {
+                    var genericType = prop.PropertyType.GetGenericArguments().FirstOrDefault();
+                    if (genericType == typeof(TEntity))
+                    {
+                        var nestedEntities = prop.GetValue(entity) as IEnumerable<TEntity>;
+                        if (nestedEntities != null)
+                        {
+                            foreach (var nestedEntity in nestedEntities)
+                            {
+                                subEntities.Add(nestedEntity);
+                                CollectNestedEntities(nestedEntity, subEntities);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         public async Task<BaseResponse> DeleteAsync(Guid id)
         {
             try
             {
                 var entity = await this.Table.FindAsync(id);
-                if (entity != null)
+                if (entity == null)
                 {
-                    this.Table.Remove(entity);
-                    await this.context.SaveChangesAsync();
-
-                    return new BaseResponse { Succeeded = true, Message = "Kayıt başarıyla silindi." };
+                    return new BaseResponse
+                    {
+                        Succeeded = false,
+                        Message = "Silinecek kayıt bulunamadı."
+                    };
                 }
 
-                return new BaseResponse { Succeeded = false, Message = "Silinecek kayıt bulunamadı." };
+                // Soft delete işlemi
+                var isDeletedProp = entity.GetType().GetProperty("IsDeleted");
+                if (isDeletedProp != null)
+                {
+                    isDeletedProp.SetValue(entity, true);
+                }
+
+                // UpdatedDate ayarı
+                var updatedDateProp = entity.GetType().GetProperty("UpdatedDate");
+                if (updatedDateProp != null)
+                {
+                    updatedDateProp.SetValue(entity, DateTime.UtcNow);
+                }
+
+                this.context.Update(entity);
+                await this.context.SaveChangesAsync();
+
+                try
+                {
+                    // Elasticsearch üzerinde de güncelleme yap (soft delete yansıtılması için)
+                    await this.elasticSearchRepository.BulkUpdateToElasticSearchAsync(new List<TEntity> { entity });
+                }
+                catch (Exception)
+                {
+                    var jsonData = JsonConvert.SerializeObject(entity);
+                    var entityName = typeof(TEntity).Name;
+                    this.rabbitMQProducer.Publish(jsonData, entityName);
+                }
+
+                return new BaseResponse
+                {
+                    Succeeded = true,
+                    Message = "Kayıt başarıyla silindi.",
+                    Data = entity
+                };
             }
             catch (Exception ex)
             {
-                return new BaseResponse { Succeeded = false, Message = $"Kayıt silinirken hata oluştu: {ex.Message}" };
+                return new BaseResponse
+                {
+                    Succeeded = false,
+                    Message = $"Kayıt silinirken hata oluştu: {ex.Message}"
+                };
             }
         }
 
-        public async Task<BaseResponse> UpdateAsync(TEntity data)
+
+        public async Task<BaseResponse> UpdateBulkAsync(ICollection<TEntity> entities)
         {
             try
             {
-                this.Table.Update(data);
-                await this.context.SaveChangesAsync();
-                return new BaseResponse { Succeeded = true, Message = "Kayıt başarıyla güncellendi.", Data = data };
+                this.context.ChangeTracker.AutoDetectChangesEnabled = false;
+                await this.context.BulkUpdateAsync(entities);
+                this.context.ChangeTracker.AutoDetectChangesEnabled = true;
+
+                try
+                {
+                    // Elasticsearch'te de güncelleme yap
+                    await this.elasticSearchRepository.BulkUpdateToElasticSearchAsync(entities);
+                }
+                catch (Exception)
+                {
+                    // Elasticsearch kapalıysa RabbitMQ'ya mesaj gönder
+                    foreach (var entity in entities)
+                    {
+                        var jsonData = JsonConvert.SerializeObject(entity);
+                        var entityName = typeof(TEntity).Name;
+                        this.rabbitMQProducer.Publish(jsonData, entityName);
+                    }
+                }
+
+                return new BaseResponse { Succeeded = true, Message = $"{entities.Count} kayıt başarıyla güncellendi.", Data = entities };
             }
             catch (Exception ex)
             {
-                return new BaseResponse { Succeeded = false, Message = $"Kayıt güncellenirken hata oluştu: {ex.Message}" };
+                return new BaseResponse { Succeeded = false, Message = $"Toplu kayıt güncellenirken hata oluştu: {ex.Message}" };
+            }
+        }
+
+        public async Task<BaseResponse> RemoveRangeAsync(List<TEntity> entities)
+        {
+            try
+            {
+                foreach (var entity in entities)
+                {
+                    var isDeletedProp = entity.GetType().GetProperty("IsDeleted");
+                    if (isDeletedProp != null)
+                    {
+                        isDeletedProp.SetValue(entity, true);
+                    }
+
+                    var updatedDateProp = entity.GetType().GetProperty("UpdatedDate");
+                    if (updatedDateProp != null)
+                    {
+                        updatedDateProp.SetValue(entity, DateTime.UtcNow);
+                    }
+                }
+
+                this.context.ChangeTracker.AutoDetectChangesEnabled = false;
+                await this.context.BulkUpdateAsync(entities);
+                this.context.ChangeTracker.AutoDetectChangesEnabled = true;
+
+                try
+                {
+                    await this.elasticSearchRepository.BulkUpdateToElasticSearchAsync(entities);
+                }
+                catch (Exception)
+                {
+                    foreach (var entity in entities)
+                    {
+                        var jsonData = JsonConvert.SerializeObject(entity);
+                        var entityName = typeof(TEntity).Name;
+                        this.rabbitMQProducer.Publish(jsonData, entityName);
+                    }
+                }
+
+                return new BaseResponse { Succeeded = true, Message = "Toplu silme işlemi başarıyla gerçekleştirildi.", Data = entities };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse { Succeeded = false, Message = $"Toplu silme işlemi sırasında hata oluştu: {ex.Message}" };
             }
         }
     }

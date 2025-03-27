@@ -1,0 +1,296 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Menus/GetAllMenu",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/menu",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 1050
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Users/LoginUser",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/login",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Users/RegisterUser",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/user-add",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Roles/CreateRole",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/role-add",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Roles/UpdateRole",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/role-update",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Packages/GetAllPackage",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/packages",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 1000
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Packages/CreatePackage",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/added-package",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 1050
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Packages/UpdatePackage",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/update-package",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Packages/DeletePackage",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/delete-package",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Packages/DeleteBulkAllPackages",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/delete-all-package",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/PackageMenus/GetAllPackageMenu",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/menu-package",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/PackageMenus/CreatePackageMenus",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/add-package-menu",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/PackageMenus/UpdatePackageMenu",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/update-package-menu",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/PackageMenus/RemovePackageMenu",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/remove-package-menu",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/PackageMenus/RemoveBulkAllPackageMenu",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/remove-all-package-menu",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7084",
+    "RateLimitOptions": {
+      "DisableRateLimitHeaders": false,
+      "QuotaExceededMessage": "Too many requests"
+    }
+  }
+}

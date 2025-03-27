@@ -64,7 +64,7 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
                     WatchLogger.LogWarning($"{extraInElastic.Count} {typeof(TEntity).Name} kayıt Elasticsearch'te fazla, siliyoruz...");
                     foreach (var deletedEntity in extraInElastic)
                     {
-                        WatchLogger.LogWarning($"❌ Silinen Kayıt: {typeof(TEntity).Name} - Id: {GetId(deletedEntity)}");
+                        WatchLogger.LogWarning($" Silinen Kayıt: {typeof(TEntity).Name} - Id: {GetId(deletedEntity)}");
                     }
                     await elasticSearchRepository.BulkDeleteFromElasticSearchAsync(extraInElastic);
                 }

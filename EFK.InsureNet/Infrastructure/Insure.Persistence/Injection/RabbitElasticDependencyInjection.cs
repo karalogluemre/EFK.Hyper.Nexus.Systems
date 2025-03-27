@@ -1,5 +1,4 @@
-﻿using Commons.Application.Repositories.Commands;
-using Commons.Domain.Models.Role;
+﻿using Commons.Domain.Models.Role;
 using Commons.Domain.Models.User;
 using Commons.Persistence.Repositories.CrudRepositories.Commands;
 using Insure.Persistence.Context;
@@ -17,12 +16,18 @@ namespace Insure.Persistence.Injection
             #region Rabbit MQ
             services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, AppUser>>();
             services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, AppRole>>();
+            services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.Models.Menus.Menu>>();
+            services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.Models.Packages.Package>>();
+            services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.Models.Packages.PackageMenu>>();
             #endregion
 
             #region ElasticSearch
             services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, AppUser>>();
-            services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, AppRole>>(); 
+            services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, AppRole>>();
+            services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.Models.Menus.Menu>>();
+            services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.Models.Packages.PackageMenu>>();
             #endregion
+
         }
     }
 }

@@ -8,15 +8,15 @@ namespace Commons.Persistence.Configurations.Users
     {
         public void Configure(EntityTypeBuilder<UserMenuPermission> builder)
         {
-            builder.HasKey(ump => new { ump.UserId, ump.MenuId });
+            builder.HasKey(ump => new { ump.AppUserId, ump.MenuId });
 
             builder.HasOne(ump => ump.AppUser)
-                   .WithMany()
-                   .HasForeignKey(ump => ump.UserId)
+                   .WithMany(x=>x.UserMenuPermissions)
+                   .HasForeignKey(ump => ump.AppUserId)
                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(ump => ump.Menu)
-                   .WithMany()
+                   .WithMany(x=>x.UserMenuPermissions)
                    .HasForeignKey(ump => ump.MenuId)
                    .OnDelete(DeleteBehavior.Cascade);
 

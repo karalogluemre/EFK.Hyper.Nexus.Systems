@@ -11,12 +11,12 @@ namespace Commons.Persistence.Configurations.Branches
             builder.HasKey(bm => new { bm.BranchId, bm.MenuId });
 
             builder.HasOne(bm => bm.Branch)
-                   .WithMany()
+                   .WithMany(x=>x.BranchMenus)
                    .HasForeignKey(bm => bm.BranchId)
                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(bm => bm.Menu)
-                   .WithMany()
+                   .WithMany(x => x.BranchMenus)
                    .HasForeignKey(bm => bm.MenuId)
                    .OnDelete(DeleteBehavior.Cascade);
         }

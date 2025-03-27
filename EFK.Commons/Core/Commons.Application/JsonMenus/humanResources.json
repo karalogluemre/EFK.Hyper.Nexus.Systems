@@ -1,0 +1,692 @@
+{
+  "key": "0",
+  "label": "Menüler",
+  "icon": "pi pi-spin pi-cog",
+  "id": "4b2de819-3097-4463-8bb8-3315086da2b0",
+  "menuId": null,
+  "items": [
+    {
+      "key": "0_1",
+      "label": "Yönetim Paneli",
+      "id": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+      "menuId": "4b2de819-3097-4463-8bb8-3315086da2b0",
+      "icon": "pi pi-home",
+      "routerLink": "",
+      "items": [
+        {
+          "key": "0_1_0",
+          "label": "Paket Tanımı",
+          "id": "9e09273f-d36b-487c-9bf5-b0aae97ae3a7",
+          "menuId": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+          "icon": "pi pi-box",
+          "routerLink": "/yonetim-paneli/paket-tanimi"
+        },
+        {
+          "key": "0_1_1",
+          "label": "Paket Menü Tanımı",
+          "id": "8b94fbf1-3554-4e46-8ad1-c50e4915aaeb",
+          "menuId": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+          "icon": "pi pi-list",
+          "routerLink": "/yonetim-paneli/paket-menu-tanimi"
+        },
+        {
+          "key": "0_1_2",
+          "label": "Firma Tanımı",
+          "id": "346e233f-81da-43f2-a670-0ed83c1f4d6e",
+          "menuId": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+          "icon": "pi pi-building",
+          "routerLink": "/yonetim-paneli/firma-tanimi"
+        },
+        {
+          "key": "0_1_3",
+          "label": "Şube Tanımı",
+          "id": "3307e9aa-c27f-4c95-a0fe-300e5d8a6dee",
+          "menuId": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+          "icon": "pi pi-sitemap",
+          "routerLink": "/yonetim-paneli/sube-tanimi"
+        },
+        {
+          "key": "0_1_4",
+          "label": "Şube Menü Tanımı",
+          "id": "48a3be29-e005-413d-916d-1c5ba9a47f6e",
+          "menuId": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+          "icon": "pi pi-list",
+          "routerLink": "/yonetim-paneli/sube-menu-tanimi"
+        },
+        {
+          "key": "0_1_5",
+          "label": "Organizasyon Tanımı",
+          "id": "60a62e8a-6e5d-4f50-a198-1b0887e370dd",
+          "menuId": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+          "icon": "pi pi-briefcase",
+          "routerLink": "/yonetim-paneli/organizasyon-tanimi"
+        },
+        {
+          "key": "0_1_6",
+          "label": "Organizasyon Menü Tanımı",
+          "id": "26d8f0eb-b157-4fff-8a0e-0e88ffc607d4",
+          "menuId": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+          "icon": "pi pi-list",
+          "routerLink": "/yonetim-paneli/organizasyon-menu-tanimi"
+        },
+        {
+          "key": "0_1_7",
+          "label": "Grup Tanımı",
+          "id": "10e7facc-6764-4b83-83b3-ada492fed7d7",
+          "menuId": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+          "icon": "pi pi-users",
+          "routerLink": "/yonetim-paneli/grup-tanimi"
+        },
+        {
+          "key": "0_1_8",
+          "label": "Bölüm Tanımı",
+          "id": "4bc4754d-317b-4618-afbc-977c74a834c9",
+          "menuId": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+          "icon": "pi pi-folder",
+          "routerLink": "/yonetim-paneli/bolum-tanimi"
+        },
+        {
+          "key": "0_1_9",
+          "label": "Birim Tanımı",
+          "id": "938a1358-a778-4500-83cd-631ed0b87b21",
+          "menuId": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+          "icon": "pi pi-folder-open",
+          "routerLink": "/yonetim-paneli/birim-tanimi"
+        },
+        {
+          "key": "0_1_10",
+          "label": "Kullanıcılar Tanımı",
+          "id": "f08bedad-f509-4788-b21b-ddd35a6418dd",
+          "menuId": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+          "icon": "pi pi-user",
+          "routerLink": "/yonetim-paneli/kullanicilar-tanimi"
+        },
+        {
+          "key": "0_1_11",
+          "label": "Roller Tanımı",
+          "id": "61085ffe-d87e-4f59-9579-753a72c42185",
+          "menuId": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+          "icon": "pi pi-key",
+          "routerLink": "/yonetim-paneli/roller-tanimi"
+        },
+        {
+          "key": "0_1_12",
+          "label": "Rol Menü Tanımı",
+          "id": "267ce7cd-6f79-4b4b-9518-adfaa93dd580",
+          "menuId": "30885aa0-f420-4a56-acf3-79cebdea2be4",
+          "icon": "pi pi-list",
+          "routerLink": "/yonetim-paneli/rol-menu-tanimi"
+        }
+      ]
+    },
+    {
+      "key": "1",
+      "label": "İnsan Kaynakları",
+      "id": "4b2de819-3097-4463-8bb8-3315086da6b1",
+      "menuId": "4b2de819-3097-4463-8bb8-3315086da2b0",
+      "icon": "pi pi-users",
+      "routerLink": "",
+      "items": [
+        {
+          "key": "1_1",
+          "label": "Ana Yönetim Paneli",
+          "id": "3dcfd8b2-cc90-4524-8291-fe184db2173a",
+          "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
+          "icon": "pi pi-chart-line",
+          "routerLink": "",
+          "items": [
+            {
+              "key": "1_1_0",
+              "label": "Genel İK Durumu",
+              "id": "921ad86f-e8ff-4071-ac70-24d7803d9b04",
+              "menuId": "3dcfd8b2-cc90-4524-8291-fe184db2173a",
+              "icon": "pi pi-chart-bar",
+              "routerLink": "/insan-kaynaklari/genel-durum"
+            },
+            {
+              "key": "1_1_1",
+              "label": "Öne Çıkan İK Bildirimleri",
+              "id": "9c508ffb-09ea-409d-b9fa-182604287b74",
+              "menuId": "3dcfd8b2-cc90-4524-8291-fe184db2173a",
+              "icon": "pi pi-bell",
+              "routerLink": "/insan-kaynaklari/ik-bildirimleri"
+            },
+            {
+              "key": "1_1_2",
+              "label": "Günlük İşlemler",
+              "id": "3d79f45f-2d95-4701-9fd0-3e869da549e9",
+              "menuId": "3dcfd8b2-cc90-4524-8291-fe184db2173a",
+              "icon": "pi pi-calendar",
+              "routerLink": "/insan-kaynaklari/gunluk-islemler"
+            }
+          ]
+        },
+        {
+          "key": "1_2",
+          "label": "Çalışan Yönetimi",
+          "id": "b47ee8ab-12d6-4758-b697-89be47d19eb4",
+          "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
+          "icon": "pi pi-id-card",
+          "routerLink": "",
+          "items": [
+            {
+              "key": "1_2_0",
+              "label": "Çalışan Listesi",
+              "id": "4dd8f5d1-ab7b-4d10-9740-29a549573af5",
+              "menuId": "b47ee8ab-12d6-4758-b697-89be47d19eb4",
+              "icon": "pi pi-users",
+              "routerLink": "/calisan-yonetimi/liste"
+            },
+            {
+              "key": "1_2_1",
+              "label": "Çalışan Profili",
+              "id": "813fd8a8-d89c-4a1d-831d-36d4425d1f37",
+              "menuId": "b47ee8ab-12d6-4758-b697-89be47d19eb4",
+              "icon": "pi pi-user",
+              "routerLink": "/calisan-yonetimi/profil"
+            },
+            {
+              "key": "1_2_2",
+              "label": "Özlük Dosyaları",
+              "id": "64427bcc-8320-447c-a711-8e6d0a4b7547",
+              "menuId": "b47ee8ab-12d6-4758-b697-89be47d19eb4",
+              "icon": "pi pi-folder",
+              "routerLink": "/calisan-yonetimi/ozluk-dosyalari"
+            },
+            {
+              "key": "1_2_3",
+              "label": "Yetkinlik ve Sertifikalar",
+              "id": "6cb6b747-782d-4780-ba87-42dbac9ef31d",
+              "menuId": "b47ee8ab-12d6-4758-b697-89be47d19eb4",
+              "icon": "pi pi-award",
+              "routerLink": "/calisan-yonetimi/yetkinlikler-sertifikalar"
+            },
+            {
+              "key": "1_2_4",
+              "label": "Departman & Pozisyon Yönetimi",
+              "id": "2d85753e-1527-45f2-9d67-c3116d15147d",
+              "menuId": "b47ee8ab-12d6-4758-b697-89be47d19eb4",
+              "icon": "pi pi-sitemap",
+              "routerLink": "/calisan-yonetimi/departman-pozisyon"
+            },
+            {
+              "key": "1_2_5",
+              "label": "Şirket Hiyerarşisi ve Organizasyon Şeması",
+              "id": "e4f18972-8c8f-46c3-bf85-de424acb4fe8",
+              "menuId": "b47ee8ab-12d6-4758-b697-89be47d19eb4",
+              "icon": "pi pi-organization",
+              "routerLink": "/calisan-yonetimi/sirket-hiyerarsi"
+            }
+          ]
+        },
+        {
+          "key": "1_3",
+          "label": "İşe Alım",
+          "id": "66d90194-9bd0-4f32-9452-08c079200f38",
+          "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
+          "icon": "pi pi-briefcase",
+          "routerLink": "",
+          "items": [
+            {
+              "key": "1_3_0",
+              "label": "Açık Pozisyonlar & İş İlanları",
+              "id": "a69ef06f-5a61-40ec-9800-a4a8225752f6",
+              "menuId": "66d90194-9bd0-4f32-9452-08c079200f38",
+              "icon": "pi pi-megaphone",
+              "routerLink": "/ise-alim/acik-pozisyonlar"
+            },
+            {
+              "key": "1_3_1",
+              "label": "Başvuru Takibi & Aday Havuzu",
+              "id": "453695e1-11c6-41be-81b2-21fbd4b3c1c6",
+              "menuId": "66d90194-9bd0-4f32-9452-08c079200f38",
+              "icon": "pi pi-users",
+              "routerLink": "/ise-alim/basvuru-takibi"
+            },
+            {
+              "key": "1_3_2",
+              "label": "Mülakat Süreçleri & Aday Değerlendirme",
+              "id": "a72f0026-6cf0-4ab8-b71c-850676e4ae00",
+              "menuId": "66d90194-9bd0-4f32-9452-08c079200f38",
+              "icon": "pi pi-comments",
+              "routerLink": "/ise-alim/mulakat-surecleri"
+            },
+            {
+              "key": "1_3_3",
+              "label": "İşe Alım Raporları ve Performans Analizi",
+              "id": "3834f789-50ce-4168-9f6d-2b4570628ab4",
+              "menuId": "66d90194-9bd0-4f32-9452-08c079200f38",
+              "icon": "pi pi-chart-bar",
+              "routerLink": "/ise-alim/raporlar-analiz"
+            },
+            {
+              "key": "1_3_4",
+              "label": "Yeni Çalışan Onboarding",
+              "id": "723a94bc-238c-4ee2-adea-7a63335d3641",
+              "menuId": "66d90194-9bd0-4f32-9452-08c079200f38",
+              "icon": "pi pi-user-plus",
+              "routerLink": "/ise-alim/onboarding"
+            }
+          ]
+        },
+        {
+          "key": "1_4",
+          "label": "Bordro & Maaş Yönetimi",
+          "id": "4285d6b5-8000-422d-960b-ca5c95db29e2",
+          "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
+          "icon": "pi pi-money-bill",
+          "routerLink": "",
+          "items": [
+            {
+              "key": "1_4_0",
+              "label": "Maaş Bordroları",
+              "id": "db8c5557-cee9-4311-9ea5-9ed2648f7f2e",
+              "menuId": "4285d6b5-8000-422d-960b-ca5c95db29e2",
+              "icon": "pi pi-file",
+              "routerLink": "/bordro-maas-yonetimi/maas-bordrolari"
+            },
+            {
+              "key": "1_4_1",
+              "label": "Prim & Ek Ödemeler",
+              "id": "7c2872aa-4f3d-4887-bb7a-ccb0be674fa0",
+              "menuId": "4285d6b5-8000-422d-960b-ca5c95db29e2",
+              "icon": "pi pi-gift",
+              "routerLink": "/bordro-maas-yonetimi/prim-ek-odemeler"
+            },
+            {
+              "key": "1_4_2",
+              "label": "Kesinti & Vergiler",
+              "id": "e909856d-ddd0-4e9d-835a-4794bc30d8a8",
+              "menuId": "4285d6b5-8000-422d-960b-ca5c95db29e2",
+              "icon": "pi pi-percentage",
+              "routerLink": "/bordro-maas-yonetimi/kesinti-vergiler"
+            },
+            {
+              "key": "1_4_3",
+              "label": "Maaş Zammı Planlama",
+              "id": "0488f48f-2815-43f0-a7fc-5b23feb338d2",
+              "menuId": "4285d6b5-8000-422d-960b-ca5c95db29e2",
+              "icon": "pi pi-chart-line",
+              "routerLink": "/bordro-maas-yonetimi/maas-zammi-planlama"
+            },
+            {
+              "key": "1_4_4",
+              "label": "Bordro Raporları",
+              "id": "bffe0cda-4031-4d7c-8b3f-a1e245d5b5d9",
+              "menuId": "4285d6b5-8000-422d-960b-ca5c95db29e2",
+              "icon": "pi pi-chart-bar",
+              "routerLink": "/bordro-maas-yonetimi/bordro-raporlari"
+            },
+            {
+              "key": "1_4_5",
+              "label": "Ödeme Takvimi ve Banka Entegrasyonu",
+              "id": "373f0834-9955-4aa2-bd91-d6efa3de22cc",
+              "menuId": "4285d6b5-8000-422d-960b-ca5c95db29e2",
+              "icon": "pi pi-calendar",
+              "routerLink": "/bordro-maas-yonetimi/odeme-takvimi-banka-entegrasyonu"
+            }
+          ]
+        },
+        {
+          "key": "1_5",
+          "label": "İzin ve Devamsızlık Yönetimi",
+          "id": "49d68516-1891-459b-945b-22ef63b4aa8e",
+          "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
+          "icon": "pi pi-calendar-minus",
+          "routerLink": "",
+          "items": [
+            {
+              "key": "1_5_0",
+              "label": "İzin Talepleri & Onay Süreçleri",
+              "id": "3f68e088-b761-458c-b99a-27f06bdd1d0c",
+              "menuId": "49d68516-1891-459b-945b-22ef63b4aa8e",
+              "icon": "pi pi-check-square",
+              "routerLink": "/izin-devamsizlik/izin-onay"
+            },
+            {
+              "key": "1_5_1",
+              "label": "Yıllık İzin Hakediş ve Kullanım Takibi",
+              "id": "1aa5af36-534c-4f91-80de-43df1322b329",
+              "menuId": "49d68516-1891-459b-945b-22ef63b4aa8e",
+              "icon": "pi pi-calendar",
+              "routerLink": "/izin-devamsizlik/yillik-izin"
+            },
+            {
+              "key": "1_5_2",
+              "label": "Hastalık, Mazeret & Ücretsiz İzinler",
+              "id": "1eac5078-b910-40cd-ab59-b75dc36b9410",
+              "menuId": "49d68516-1891-459b-945b-22ef63b4aa8e",
+              "icon": "pi pi-user-minus",
+              "routerLink": "/izin-devamsizlik/hastalik-mazeret-izinler"
+            },
+            {
+              "key": "1_5_3",
+              "label": "Devamsızlık Analizi & Raporlama",
+              "id": "0b72d11b-eecc-4fb1-beb7-5d5e3182ae70",
+              "menuId": "49d68516-1891-459b-945b-22ef63b4aa8e",
+              "icon": "pi pi-chart-line",
+              "routerLink": "/izin-devamsizlik/devamsizlik-raporlar"
+            },
+            {
+              "key": "1_5_4",
+              "label": "İzin Politikaları & Esneklik Yönetimi",
+              "id": "74d0bb63-1285-46c6-ab3c-e3e70b665871",
+              "menuId": "49d68516-1891-459b-945b-22ef63b4aa8e",
+              "icon": "pi pi-sliders-h",
+              "routerLink": "/izin-devamsizlik/izin-politikalari"
+            }
+          ]
+        },
+        {
+          "key": "1_6",
+          "label": "Performans ve Kariyer Yönetimi",
+          "id": "485686f2-95a7-418a-a335-5d61fbf0109c",
+          "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
+          "icon": "pi pi-star",
+          "routerLink": "",
+          "items": [
+            {
+              "key": "1_6_0",
+              "label": "Çalışan Performans Değerlendirme",
+              "id": "bb3aea07-dc2a-469e-be41-ba4667c7d743",
+              "menuId": "485686f2-95a7-418a-a335-5d61fbf0109c",
+              "icon": "pi pi-chart-line",
+              "routerLink": "/performans-kariyer/calisan-performans"
+            },
+            {
+              "key": "1_6_1",
+              "label": "360 Derece Geri Bildirim",
+              "id": "a4e3427c-00f6-464f-8cb8-f0a2fd026756",
+              "menuId": "485686f2-95a7-418a-a335-5d61fbf0109c",
+              "icon": "pi pi-comments",
+              "routerLink": "/performans-kariyer/360-geri-bildirim"
+            },
+            {
+              "key": "1_6_2",
+              "label": "Terfi ve Atama Yönetimi",
+              "id": "7cf9fb20-bb29-4481-89d4-3e129e199853",
+              "menuId": "485686f2-95a7-418a-a335-5d61fbf0109c",
+              "icon": "pi pi-arrow-up",
+              "routerLink": "/performans-kariyer/terfi-atama"
+            },
+            {
+              "key": "1_6_3",
+              "label": "Çalışan Memnuniyeti & Motivasyon Anketleri",
+              "id": "da4ba8a0-0462-485f-95d2-38764ea5e55e",
+              "menuId": "485686f2-95a7-418a-a335-5d61fbf0109c",
+              "icon": "pi pi-chart-bar",
+              "routerLink": "/performans-kariyer/memnuniyet-anketleri"
+            },
+            {
+              "key": "1_6_4",
+              "label": "Kariyer Planlama & Gelişim Süreçleri",
+              "id": "81468889-7fda-4667-8b88-5e45a5933b66",
+              "menuId": "485686f2-95a7-418a-a335-5d61fbf0109c",
+              "icon": "pi pi-briefcase",
+              "routerLink": "/performans-kariyer/kariyer-planlama"
+            }
+          ]
+        },
+        {
+          "key": "1_7",
+          "label": "Eğitim & Gelişim Yönetimi",
+          "id": "4ec1b707-195f-4b5d-b358-ac380f4a948b",
+          "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
+          "icon": "pi pi-book",
+          "routerLink": "",
+          "items": [
+            {
+              "key": "1_7_0",
+              "label": "Eğitim Planlama & Takibi",
+              "id": "0a1d3b07-fcda-46ce-ba9e-efc440dcebcf",
+              "menuId": "4ec1b707-195f-4b5d-b358-ac380f4a948b",
+              "icon": "pi pi-calendar",
+              "routerLink": "/egitim-gelisim/planlama-takip"
+            },
+            {
+              "key": "1_7_1",
+              "label": "Online & Yüz Yüze Eğitimler",
+              "id": "581c4e11-226e-41f4-bcff-2b81b2257098",
+              "menuId": "4ec1b707-195f-4b5d-b358-ac380f4a948b",
+              "icon": "pi pi-video",
+              "routerLink": "/egitim-gelisim/online-egitimler"
+            },
+            {
+              "key": "1_7_2",
+              "label": "Sertifikalar & Başarı Analizleri",
+              "id": "b2f6ebf9-9539-487c-82ae-411773b41733",
+              "menuId": "4ec1b707-195f-4b5d-b358-ac380f4a948b",
+              "icon": "pi pi-award",
+              "routerLink": "/egitim-gelisim/sertifikalar"
+            },
+            {
+              "key": "1_7_3",
+              "label": "Zorunlu Eğitim Süreçleri",
+              "id": "01febd47-e7f2-4354-bc19-4f2332d52cb6",
+              "menuId": "4ec1b707-195f-4b5d-b358-ac380f4a948b",
+              "icon": "pi pi-lock",
+              "routerLink": "/egitim-gelisim/zorunlu-egitimler"
+            },
+            {
+              "key": "1_7_4",
+              "label": "Eğitim Katılım Raporları",
+              "id": "a008d9c2-15bb-4b52-88c7-40f2265230d8",
+              "menuId": "4ec1b707-195f-4b5d-b358-ac380f4a948b",
+              "icon": "pi pi-chart-bar",
+              "routerLink": "/egitim-gelisim/katilim-raporlari"
+            }
+          ]
+        },
+        {
+          "key": "1_8",
+          "label": "İş Sağlığı ve Güvenliği",
+          "id": "12595a5c-8bf4-4b19-9d33-f505d7be117f",
+          "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
+          "icon": "pi pi-shield",
+          "routerLink": "",
+          "items": [
+            {
+              "key": "1_8_0",
+              "label": "İSG Eğitimleri & Katılım Listeleri",
+              "id": "ff9f3a75-e48b-4fd4-8d1e-e53eeeb74cca",
+              "menuId": "12595a5c-8bf4-4b19-9d33-f505d7be117f",
+              "icon": "pi pi-users",
+              "routerLink": "/isg/egitimler-katilim"
+            },
+            {
+              "key": "1_8_1",
+              "label": "Çalışan Sağlık Raporları",
+              "id": "189860ef-89b9-4fc3-b34f-7628062a678c",
+              "menuId": "12595a5c-8bf4-4b19-9d33-f505d7be117f",
+              "icon": "pi pi-file",
+              "routerLink": "/isg/saglik-raporlari"
+            },
+            {
+              "key": "1_8_2",
+              "label": "İş Kazası Kayıtları & Risk Değerlendirme",
+              "id": "29ec0560-d419-494b-8392-782006abb3c3",
+              "menuId": "12595a5c-8bf4-4b19-9d33-f505d7be117f",
+              "icon": "pi pi-exclamation-triangle",
+              "routerLink": "/isg/is-kazalari-risk-degerlendirme"
+            },
+            {
+              "key": "1_8_3",
+              "label": "Acil Durum Planları & Tatbikat Yönetimi",
+              "id": "d77ac514-1605-40d3-8a1a-e269d4057e45",
+              "menuId": "12595a5c-8bf4-4b19-9d33-f505d7be117f",
+              "icon": "pi pi-bell",
+              "routerLink": "/isg/acil-durum-planlari"
+            },
+            {
+              "key": "1_8_4",
+              "label": "İSG Denetim Raporları",
+              "id": "bf15a081-dfe5-4a27-a520-ad6ed7da2510",
+              "menuId": "12595a5c-8bf4-4b19-9d33-f505d7be117f",
+              "icon": "pi pi-file-pdf",
+              "routerLink": "/isg/denetim-raporlari"
+            }
+          ]
+        },
+        {
+          "key": "1_9",
+          "label": "Yan Haklar & Çalışan Sosyal Hakları",
+          "id": "2213a795-ac9c-4a7d-9410-6b444d3356d8",
+          "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
+          "icon": "pi pi-gift",
+          "routerLink": "",
+          "items": [
+            {
+              "key": "1_9_0",
+              "label": "Özel Sağlık Sigortası",
+              "id": "ea8434c7-1b1f-4f61-9d71-a77ca64ac3c4",
+              "menuId": "2213a795-ac9c-4a7d-9410-6b444d3356d8",
+              "icon": "pi pi-heart",
+              "routerLink": "/yan-haklar/saglik-sigortasi"
+            },
+            {
+              "key": "1_9_1",
+              "label": "Yemek & Servis Hizmetleri",
+              "id": "0c5ac6f2-e143-4d19-9365-e58acee2c4e7",
+              "menuId": "2213a795-ac9c-4a7d-9410-6b444d3356d8",
+              "icon": "pi pi-truck",
+              "routerLink": "/yan-haklar/yemek-servis"
+            },
+            {
+              "key": "1_9_2",
+              "label": "Çalışan Sosyal Kulüpleri & Organizasyonlar",
+              "id": "fbcab6ac-d86c-4798-b1f3-35c9cb325f9b",
+              "menuId": "2213a795-ac9c-4a7d-9410-6b444d3356d8",
+              "icon": "pi pi-users",
+              "routerLink": "/yan-haklar/sosyal-kulupler"
+            },
+            {
+              "key": "1_9_3",
+              "label": "Yan Haklar Yönetimi",
+              "id": "3610a81c-46cf-4de1-a573-631119d3d975",
+              "menuId": "2213a795-ac9c-4a7d-9410-6b444d3356d8",
+              "icon": "pi pi-cog",
+              "routerLink": "/yan-haklar/yonetim"
+            },
+            {
+              "key": "1_9_4",
+              "label": "Çalışan Ödüllendirme & Motivasyon Programları",
+              "id": "705f5776-7149-43c8-882a-fde133a9b279",
+              "menuId": "2213a795-ac9c-4a7d-9410-6b444d3356d8",
+              "icon": "pi pi-star",
+              "routerLink": "/yan-haklar/odullendirme"
+            }
+          ]
+        },
+        {
+          "key": "1_10",
+          "label": "Disiplin ve Uyarı Süreçleri",
+          "id": "df0bbfa2-1dfa-41ed-9b2e-7cceadd99418",
+          "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
+          "icon": "pi pi-exclamation-triangle",
+          "routerLink": "",
+          "items": [
+            {
+              "key": "1_10_0",
+              "label": "Disiplin Süreci & Kural İhlali Yönetimi",
+              "id": "68255f4d-0a6f-4479-ac00-37fb8a905486",
+              "menuId": "df0bbfa2-1dfa-41ed-9b2e-7cceadd99418",
+              "icon": "pi pi-ban",
+              "routerLink": "/disiplin-uyari/kural-ihlalleri"
+            },
+            {
+              "key": "1_10_1",
+              "label": "Uyarı & Ceza Kayıtları",
+              "id": "89710394-b4fb-49ea-aeb9-65eb90b931f5",
+              "menuId": "df0bbfa2-1dfa-41ed-9b2e-7cceadd99418",
+              "icon": "pi pi-file-excel",
+              "routerLink": "/disiplin-uyari/uyari-cezalar"
+            },
+            {
+              "key": "1_10_2",
+              "label": "Şikayet & Geri Bildirim Mekanizması",
+              "id": "db2f66bd-719e-41c4-b164-32e79e1c2dea",
+              "menuId": "df0bbfa2-1dfa-41ed-9b2e-7cceadd99418",
+              "icon": "pi pi-comments",
+              "routerLink": "/disiplin-uyari/sikayet-bildirim"
+            },
+            {
+              "key": "1_10_3",
+              "label": "Kurallar ve Yönetmelikler",
+              "id": "9f12fd4b-4d17-4610-8199-a381395453c7",
+              "menuId": "df0bbfa2-1dfa-41ed-9b2e-7cceadd99418",
+              "icon": "pi pi-book",
+              "routerLink": "/disiplin-uyari/kurallar-yonetmelikler"
+            }
+          ]
+        },
+        {
+          "key": "1_11",
+          "label": "Raporlama & Analitik",
+          "id": "103002f7-df96-4a29-a25b-78e6a2fc5145",
+          "menuId": "4b2de819-3097-4463-8bb8-3315086da6b1",
+          "icon": "pi pi-chart-bar",
+          "routerLink": "",
+          "items": [
+            {
+              "key": "1_11_0",
+              "label": "Genel İK Raporları",
+              "id": "76ea92a6-820a-4ace-9004-9fe05240d39e",
+              "menuId": "103002f7-df96-4a29-a25b-78e6a2fc5145",
+              "icon": "pi pi-chart-pie",
+              "routerLink": "/raporlama-analitik/genel-ik"
+            },
+            {
+              "key": "1_11_1",
+              "label": "Departman & Pozisyon Bazlı Çalışan Analizi",
+              "id": "84608417-9b2b-4b0c-b714-6c482bf8f527",
+              "menuId": "103002f7-df96-4a29-a25b-78e6a2fc5145",
+              "icon": "pi pi-sitemap",
+              "routerLink": "/raporlama-analitik/departman-pozisyon"
+            },
+            {
+              "key": "1_11_2",
+              "label": "İşe Alım Performansı Raporları",
+              "id": "50b4f3da-8df9-49df-9d04-c1d196c6eb69",
+              "menuId": "103002f7-df96-4a29-a25b-78e6a2fc5145",
+              "icon": "pi pi-user-plus",
+              "routerLink": "/raporlama-analitik/ise-alim"
+            },
+            {
+              "key": "1_11_3",
+              "label": "İzin & Devamsızlık Analizleri",
+              "id": "283e7bfc-3467-443f-b7d7-b08106e8d9be",
+              "menuId": "103002f7-df96-4a29-a25b-78e6a2fc5145",
+              "icon": "pi pi-calendar",
+              "routerLink": "/raporlama-analitik/izin-devamsizlik"
+            },
+            {
+              "key": "1_11_4",
+              "label": "Bordro & Maaş Dağılımı Raporları",
+              "id": "a7a08124-0cd0-41c7-99ba-642217333df3",
+              "menuId": "103002f7-df96-4a29-a25b-78e6a2fc5145",
+              "icon": "pi pi-money-bill",
+              "routerLink": "/raporlama-analitik/bordro-maas"
+            },
+            {
+              "key": "1_11_5",
+              "label": "Çalışan Performans Trendleri",
+              "id": "88b7bdcd-a5b5-49bb-8df6-71647bdb8645",
+              "menuId": "103002f7-df96-4a29-a25b-78e6a2fc5145",
+              "icon": "pi pi-line-chart",
+              "routerLink": "/raporlama-analitik/performans-trendleri"
+            },
+            {
+              "key": "1_11_6",
+              "label": "Eğitim Katılım & Etkinlik Raporları",
+              "id": "54ff6ce7-bcd1-45ca-807d-9700b465b0ad",
+              "menuId": "103002f7-df96-4a29-a25b-78e6a2fc5145",
+              "icon": "pi pi-users",
+              "routerLink": "/raporlama-analitik/egitim-katilim"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+  

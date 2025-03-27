@@ -1,5 +1,5 @@
-﻿using Commons.Persistence.Configurations.Users;
-using Microsoft.EntityFrameworkCore;
+﻿using Commons.Persistence.Mapper.Package;
+using Commons.Persistence.Mapper.Role;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -13,6 +13,8 @@ namespace Commons.Persistence.Registrations
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
         
             services.AddAutoMapper(typeof(UserMappingProfile).Assembly);
+            services.AddAutoMapper(typeof(RoleMappingProfile).Assembly);
+            services.AddAutoMapper(typeof(PackageMappingProfile).Assembly);
         }
     }
 }

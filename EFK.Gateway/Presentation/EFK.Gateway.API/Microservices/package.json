@@ -1,0 +1,106 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Packages/GetAllPackage",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/packages",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 1000
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Packages/CreatePackage",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/added-package",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 1050
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Packages/UpdatePackage",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/update-package",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Packages/DeletePackage",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/delete-package",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Packages/DeleteBulkAllPackages",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7276
+        }
+      ],
+      "UpstreamPathTemplate": "/delete-all-package",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "127.0.0.1" ],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 50
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7084",
+    "RateLimitOptions": {
+      "DisableRateLimitHeaders": false,
+      "QuotaExceededMessage": "Too many requests"
+    }
+  }
+}

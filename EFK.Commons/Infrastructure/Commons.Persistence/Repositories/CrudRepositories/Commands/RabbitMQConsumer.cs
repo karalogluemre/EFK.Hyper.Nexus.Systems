@@ -30,7 +30,7 @@ public class RabbitMQConsumer<TDbContext, TEntity> : BackgroundService
             Password = configuration["RabbitMQ:Password"]
         };
 
-        _connection = factory.CreateConnection();
+         _connection = factory.CreateConnection();
         _channel = _connection.CreateModel();
         _channel.QueueDeclare(queue: _queueName, durable: true, exclusive: false, autoDelete: false);
     }

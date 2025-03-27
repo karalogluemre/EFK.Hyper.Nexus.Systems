@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Insure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250316112807_MigEmre001")]
+    [Migration("20250324110355_MigEmre001")]
     partial class MigEmre001
     {
         /// <inheritdoc />
@@ -66,12 +66,7 @@ namespace Insure.Persistence.Migrations
                     b.Property<Guid>("MenuId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("BranchId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("BranchId", "MenuId");
-
-                    b.HasIndex("BranchId1");
 
                     b.HasIndex("MenuId");
 
@@ -186,19 +181,44 @@ namespace Insure.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("MenuId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RouterLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Target")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
 
                     b.ToTable("Menu");
                 });
@@ -244,14 +264,9 @@ namespace Insure.Persistence.Migrations
                     b.Property<Guid>("MenuId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("OrganizationId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("OrganizationId", "MenuId");
 
                     b.HasIndex("MenuId");
-
-                    b.HasIndex("OrganizationId1");
 
                     b.ToTable("OrganizationMenus");
                 });
@@ -541,7 +556,7 @@ namespace Insure.Persistence.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("UserDepartment");
+                    b.ToTable("UserDepartments");
                 });
 
             modelBuilder.Entity("Commons.Domain.Models.User.UserGroup", b =>
@@ -556,18 +571,15 @@ namespace Insure.Persistence.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("UserGroup");
+                    b.ToTable("UserGroups");
                 });
 
             modelBuilder.Entity("Commons.Domain.Models.User.UserMenuPermission", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("AppUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MenuId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("AppUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("CanCreate")
@@ -582,9 +594,7 @@ namespace Insure.Persistence.Migrations
                     b.Property<bool>("CanUpdate")
                         .HasColumnType("bit");
 
-                    b.HasKey("UserId", "MenuId");
-
-                    b.HasIndex("AppUserId");
+                    b.HasKey("AppUserId", "MenuId");
 
                     b.HasIndex("MenuId");
 
@@ -603,25 +613,20 @@ namespace Insure.Persistence.Migrations
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("UserOrganization");
+                    b.ToTable("UserOrganizations");
                 });
 
             modelBuilder.Entity("Commons.Domain.Models.User.UserRole", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("AppUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RoleId")
+                    b.Property<Guid>("AppRoleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AppUserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("AppUserId", "AppRoleId");
 
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("RoleId");
+                    b.HasIndex("AppRoleId");
 
                     b.ToTable("UserRoles");
                 });
@@ -638,7 +643,7 @@ namespace Insure.Persistence.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("UserUnit");
+                    b.ToTable("UserUnits");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -758,17 +763,13 @@ namespace Insure.Persistence.Migrations
             modelBuilder.Entity("Commons.Domain.Models.Branches.BranchMenu", b =>
                 {
                     b.HasOne("Commons.Domain.Models.Branches.Branch", "Branch")
-                        .WithMany()
+                        .WithMany("BranchMenus")
                         .HasForeignKey("BranchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Commons.Domain.Models.Branches.Branch", null)
-                        .WithMany("BranchMenus")
-                        .HasForeignKey("BranchId1");
-
                     b.HasOne("Commons.Domain.Models.Menus.Menu", "Menu")
-                        .WithMany()
+                        .WithMany("BranchMenus")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -811,6 +812,15 @@ namespace Insure.Persistence.Migrations
                     b.Navigation("Organization");
                 });
 
+            modelBuilder.Entity("Commons.Domain.Models.Menus.Menu", b =>
+                {
+                    b.HasOne("Commons.Domain.Models.Menus.Menu", "ParentMenu")
+                        .WithMany("Items")
+                        .HasForeignKey("MenuId");
+
+                    b.Navigation("ParentMenu");
+                });
+
             modelBuilder.Entity("Commons.Domain.Models.Organizations.Organization", b =>
                 {
                     b.HasOne("Commons.Domain.Models.Branches.Branch", "Branch")
@@ -825,20 +835,16 @@ namespace Insure.Persistence.Migrations
             modelBuilder.Entity("Commons.Domain.Models.Organizations.OrganizationMenu", b =>
                 {
                     b.HasOne("Commons.Domain.Models.Menus.Menu", "Menu")
-                        .WithMany()
+                        .WithMany("OrganizationMenus")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Commons.Domain.Models.Organizations.Organization", "Organization")
-                        .WithMany()
+                        .WithMany("OrganizationMenus")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Commons.Domain.Models.Organizations.Organization", null)
-                        .WithMany("OrganizationMenus")
-                        .HasForeignKey("OrganizationId1");
 
                     b.Navigation("Menu");
 
@@ -912,7 +918,7 @@ namespace Insure.Persistence.Migrations
             modelBuilder.Entity("Commons.Domain.Models.User.UserDepartment", b =>
                 {
                     b.HasOne("Commons.Domain.Models.Departments.Department", "Department")
-                        .WithMany()
+                        .WithMany("UserDepartments")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -931,7 +937,7 @@ namespace Insure.Persistence.Migrations
             modelBuilder.Entity("Commons.Domain.Models.User.UserGroup", b =>
                 {
                     b.HasOne("Commons.Domain.Models.Groups.Group", "Group")
-                        .WithMany()
+                        .WithMany("UserGroups")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -949,19 +955,15 @@ namespace Insure.Persistence.Migrations
 
             modelBuilder.Entity("Commons.Domain.Models.User.UserMenuPermission", b =>
                 {
-                    b.HasOne("Commons.Domain.Models.User.AppUser", null)
+                    b.HasOne("Commons.Domain.Models.User.AppUser", "AppUser")
                         .WithMany("UserMenuPermissions")
-                        .HasForeignKey("AppUserId");
-
-                    b.HasOne("Commons.Domain.Models.Menus.Menu", "Menu")
-                        .WithMany()
-                        .HasForeignKey("MenuId")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Commons.Domain.Models.User.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                    b.HasOne("Commons.Domain.Models.Menus.Menu", "Menu")
+                        .WithMany("UserMenuPermissions")
+                        .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -973,7 +975,7 @@ namespace Insure.Persistence.Migrations
             modelBuilder.Entity("Commons.Domain.Models.User.UserOrganization", b =>
                 {
                     b.HasOne("Commons.Domain.Models.Organizations.Organization", "Organization")
-                        .WithMany()
+                        .WithMany("UserOrganizations")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -991,19 +993,15 @@ namespace Insure.Persistence.Migrations
 
             modelBuilder.Entity("Commons.Domain.Models.User.UserRole", b =>
                 {
-                    b.HasOne("Commons.Domain.Models.User.AppUser", null)
-                        .WithMany("UserRoles")
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("Commons.Domain.Models.Role.AppRole", "AppRole")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("AppRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Commons.Domain.Models.User.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1015,7 +1013,7 @@ namespace Insure.Persistence.Migrations
             modelBuilder.Entity("Commons.Domain.Models.User.UserUnit", b =>
                 {
                     b.HasOne("Commons.Domain.Models.Units.Unit", "Unit")
-                        .WithMany()
+                        .WithMany("UserUnits")
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1097,16 +1095,28 @@ namespace Insure.Persistence.Migrations
             modelBuilder.Entity("Commons.Domain.Models.Departments.Department", b =>
                 {
                     b.Navigation("Units");
+
+                    b.Navigation("UserDepartments");
                 });
 
             modelBuilder.Entity("Commons.Domain.Models.Groups.Group", b =>
                 {
                     b.Navigation("Departments");
+
+                    b.Navigation("UserGroups");
                 });
 
             modelBuilder.Entity("Commons.Domain.Models.Menus.Menu", b =>
                 {
+                    b.Navigation("BranchMenus");
+
+                    b.Navigation("Items");
+
+                    b.Navigation("OrganizationMenus");
+
                     b.Navigation("PackageMenus");
+
+                    b.Navigation("UserMenuPermissions");
                 });
 
             modelBuilder.Entity("Commons.Domain.Models.Organizations.Organization", b =>
@@ -1114,6 +1124,8 @@ namespace Insure.Persistence.Migrations
                     b.Navigation("Groups");
 
                     b.Navigation("OrganizationMenus");
+
+                    b.Navigation("UserOrganizations");
                 });
 
             modelBuilder.Entity("Commons.Domain.Models.Packages.Package", b =>
@@ -1126,6 +1138,13 @@ namespace Insure.Persistence.Migrations
             modelBuilder.Entity("Commons.Domain.Models.Role.AppRole", b =>
                 {
                     b.Navigation("RoleMenuPermissions");
+
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("Commons.Domain.Models.Units.Unit", b =>
+                {
+                    b.Navigation("UserUnits");
                 });
 
             modelBuilder.Entity("Commons.Domain.Models.User.AppUser", b =>
