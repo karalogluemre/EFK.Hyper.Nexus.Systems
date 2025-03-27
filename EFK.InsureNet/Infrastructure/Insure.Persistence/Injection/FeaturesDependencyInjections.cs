@@ -2,11 +2,15 @@
 using Commons.Application.Features.Commands.Package.Create;
 using Commons.Application.Features.Commands.Package.Remove;
 using Commons.Application.Features.Commands.Package.Update;
+using Commons.Application.Features.Commands.PackageMenu.Create;
+using Commons.Application.Features.Commands.PackageMenu.Remove;
+using Commons.Application.Features.Commands.PackageMenu.Update;
 using Commons.Application.Features.Commands.Role.Create;
 using Commons.Application.Features.Commands.Role.Update;
 using Commons.Application.Features.Commands.User.Create;
 using Commons.Application.Features.Queries.Menu;
 using Commons.Application.Features.Queries.Package;
+using Commons.Application.Features.Queries.PackageMenu;
 using Commons.Application.Features.Queries.User;
 using Commons.Application.Token;
 using Commons.Domain.Models;
@@ -45,8 +49,17 @@ namespace Insure.Persistence.Injection
             services.AddScoped<IRequestHandler<UpdatePackageCommandRequest, BaseResponse>, UpdatePackageCommandHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<DeletePackageCommandRequest, BaseResponse>, DeletePackageCommandHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<DeleteBulkAllPackageCommandRequest, BaseResponse>, DeleteBulkAllPackageCommandHandler<ApplicationDbContext>>();
-            services.AddScoped<IRequestHandler<GetAllPackagesQueryRequest, List<Commons.Domain.Models.Packages.Package>>, GetAllPackagesQueryHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<GetAllPackagesQueryRequest, BaseResponse>, GetAllPackagesQueryHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<GetPackageByIdQueryRequest, Commons.Domain.Models.Packages.Package>, GetPackageByIdQueryHandler<ApplicationDbContext>>();
+            #endregion
+
+            #region Package Menu
+            services.AddScoped<IRequestHandler<GetAllPackageMenuQueryRequest, BaseResponse>, GetAllPackageMenuQueryHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<CreatePackageMenuCommandRequest, BaseResponse>, CreatePackageMenuCommandHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<UpdatePackageMenuCommandRequest, BaseResponse>, UpdatePackageMenuCommandHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<RemovePackageMenuCommandRequest, BaseResponse>, RemovePackageMenuCommandHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<RemoveBulkAllPackageMenuCommandRequest, BaseResponse>, RemoveBulkAllPackageMenuCommandHandler<ApplicationDbContext>>();
+
             #endregion
         }
     }

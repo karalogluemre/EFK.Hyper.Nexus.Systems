@@ -225,5 +225,50 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
                 return new BaseResponse { Succeeded = false, Message = $"Toplu kayıt güncellenirken hata oluştu: {ex.Message}" };
             }
         }
+
+        public async Task<BaseResponse> RemoveRangeAsync(List<TEntity> entities)
+        {
+            try
+            {
+                foreach (var entity in entities)
+                {
+                    var isDeletedProp = entity.GetType().GetProperty("IsDeleted");
+                    if (isDeletedProp != null)
+                    {
+                        isDeletedProp.SetValue(entity, true);
+                    }
+
+                    var updatedDateProp = entity.GetType().GetProperty("UpdatedDate");
+                    if (updatedDateProp != null)
+                    {
+                        updatedDateProp.SetValue(entity, DateTime.UtcNow);
+                    }
+                }
+
+                this.context.ChangeTracker.AutoDetectChangesEnabled = false;
+                await this.context.BulkUpdateAsync(entities);
+                this.context.ChangeTracker.AutoDetectChangesEnabled = true;
+
+                try
+                {
+                    await this.elasticSearchRepository.BulkUpdateToElasticSearchAsync(entities);
+                }
+                catch (Exception)
+                {
+                    foreach (var entity in entities)
+                    {
+                        var jsonData = JsonConvert.SerializeObject(entity);
+                        var entityName = typeof(TEntity).Name;
+                        this.rabbitMQProducer.Publish(jsonData, entityName);
+                    }
+                }
+
+                return new BaseResponse { Succeeded = true, Message = "Toplu silme işlemi başarıyla gerçekleştirildi.", Data = entities };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse { Succeeded = false, Message = $"Toplu silme işlemi sırasında hata oluştu: {ex.Message}" };
+            }
+        }
     }
 }

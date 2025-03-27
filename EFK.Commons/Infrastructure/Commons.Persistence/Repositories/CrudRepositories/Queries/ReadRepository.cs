@@ -39,9 +39,13 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Queries
 
             if (entityType == null)
                 throw new Exception("Entity type could not be found.");
-            var ids = Guid.NewGuid();
+
+            var guid = Guid.Parse(id);
             var query = Table.AsQueryable();
-            return await query.FirstOrDefaultAsync(data => ids == Guid.Parse(id));
+
+            return await query.FirstOrDefaultAsync(data =>
+                EF.Property<Guid>(data, "Id") == guid
+            );
         }
 
         //public IQueryable<TEntity> GetAllPagination(int? pageNumber, int? pageSize, params Expression<Func<TEntity, object>>[]? includes)
