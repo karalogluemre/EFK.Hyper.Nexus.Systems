@@ -1,12 +1,10 @@
-﻿using Commons.Domain.Models.Branches;
-using Commons.Domain.Models.Packages;
+﻿using Commons.Domain.Models;
+using MediatR;
 
-namespace Commons.Domain.Models.Companies
+namespace Commons.Application.Features.Commands.Company.Create
 {
-    public class Company : BaseEntity
+    public class CreateCompanyCommandRequest : IRequest<BaseResponse>
     {
-        public Guid PackageId { get; set; } 
-        public Package Package { get; set; }
 
         // Temel Bilgiler
         public string Name { get; set; }
@@ -41,7 +39,7 @@ namespace Commons.Domain.Models.Companies
         public DateTime EstablishedDate { get; set; } // Kuruluş Tarihi
         public string? LogoUrl { get; set; }
 
-        public ICollection<Branch> Branches { get; set; } = new List<Branch>();
+        public Guid PackageId { get; set; }
 
     }
 }

@@ -19,6 +19,7 @@ namespace Insure.Persistence.Injection
             services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.Models.Menus.Menu>>();
             services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.Models.Packages.Package>>();
             services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.Models.Packages.PackageMenu>>();
+            services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.Models.Companies.Company>>();
             #endregion
 
             #region ElasticSearch
@@ -26,6 +27,7 @@ namespace Insure.Persistence.Injection
             services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, AppRole>>();
             services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.Models.Menus.Menu>>();
             services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.Models.Packages.PackageMenu>>();
+            services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.Models.Companies.Company>>();
             #endregion
 
         }

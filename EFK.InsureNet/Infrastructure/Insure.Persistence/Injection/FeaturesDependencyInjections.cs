@@ -1,4 +1,5 @@
-﻿using Commons.Application.Features.Commands.Menu.Create;
+﻿using Commons.Application.Features.Commands.Company.Create;
+using Commons.Application.Features.Commands.Menu.Create;
 using Commons.Application.Features.Commands.Package.Create;
 using Commons.Application.Features.Commands.Package.Remove;
 using Commons.Application.Features.Commands.Package.Update;
@@ -8,6 +9,7 @@ using Commons.Application.Features.Commands.PackageMenu.Update;
 using Commons.Application.Features.Commands.Role.Create;
 using Commons.Application.Features.Commands.Role.Update;
 using Commons.Application.Features.Commands.User.Create;
+using Commons.Application.Features.Queries.Company;
 using Commons.Application.Features.Queries.Menu;
 using Commons.Application.Features.Queries.Package;
 using Commons.Application.Features.Queries.PackageMenu;
@@ -60,6 +62,11 @@ namespace Insure.Persistence.Injection
             services.AddScoped<IRequestHandler<RemovePackageMenuCommandRequest, BaseResponse>, RemovePackageMenuCommandHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<RemoveBulkAllPackageMenuCommandRequest, BaseResponse>, RemoveBulkAllPackageMenuCommandHandler<ApplicationDbContext>>();
 
+            #endregion
+
+            #region Company
+            services.AddScoped<IRequestHandler<GetAllCompaniesQueryRequest, BaseResponse>, GetAllCompaniesQueryHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<CreateCompanyCommandRequest, BaseResponse>, CreateCompanyCommandHandler<ApplicationDbContext>>();
             #endregion
         }
     }

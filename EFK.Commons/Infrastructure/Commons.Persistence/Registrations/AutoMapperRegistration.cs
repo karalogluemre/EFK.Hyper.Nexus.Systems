@@ -1,4 +1,5 @@
-﻿using Commons.Persistence.Mapper.Package;
+﻿using Commons.Persistence.Mapper.Company;
+using Commons.Persistence.Mapper.Package;
 using Commons.Persistence.Mapper.Role;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,7 @@ namespace Commons.Persistence.Registrations
             services.AddAutoMapper(typeof(UserMappingProfile).Assembly);
             services.AddAutoMapper(typeof(RoleMappingProfile).Assembly);
             services.AddAutoMapper(typeof(PackageMappingProfile).Assembly);
+            services.AddAutoMapper(typeof(CompanyMappingProfile).Assembly);
         }
     }
 }
