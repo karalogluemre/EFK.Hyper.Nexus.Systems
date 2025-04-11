@@ -1,5 +1,6 @@
 ﻿using Commons.Domain.Models;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace Commons.Application.Features.Commands.Company.Create
 {

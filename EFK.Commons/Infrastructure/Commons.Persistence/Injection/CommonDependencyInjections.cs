@@ -1,4 +1,5 @@
-﻿using Commons.Application.Repositories.Commands;
+﻿using Commons.Application.Abstract.FileServices;
+using Commons.Application.Repositories.Commands;
 using Commons.Application.Repositories.Queries;
 using Commons.Persistence.Repositories.CrudRepositories.Commands;
 using Commons.Persistence.Repositories.CrudRepositories.Queries;
@@ -27,6 +28,10 @@ namespace Commons.Persistence.Injection
 
             #region Rabbit MQ
             services.AddScoped<IRabbitMQProducer,RabbitMQProducer>();
+            #endregion
+
+            #region File
+            //services.AddScoped<IFileStorageService, LocalFileStorageService>();
             #endregion
         }
     }

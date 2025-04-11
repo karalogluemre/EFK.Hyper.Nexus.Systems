@@ -26,7 +26,14 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
         options.RoutePrefix = string.Empty;
     });
+    app.UseDeveloperExceptionPage();
 }
+else
+{
+    app.UseExceptionHandler("/error");
+    app.UseHsts();
+}
+
 app.UseWatchDogExceptionLogger();
 
 app.UseHttpsRedirection();
