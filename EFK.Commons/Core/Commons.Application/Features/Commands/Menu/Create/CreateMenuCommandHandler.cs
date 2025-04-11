@@ -29,7 +29,7 @@ namespace Commons.Application.Features.Commands.Menu.Create
                 var menuList = new List<Commons.Domain.Models.Menus.Menu> { menuData };
                 CollectAllMenus(menuData, menuList);
 
-                return await this.writeRepository.AddBulkAsync(menuList);
+                return await this.writeRepository.AddOrUpdateBulkAsync(menuList);
             }
             return new BaseResponse { Message = "File not found", Succeeded = false };
 

@@ -54,7 +54,7 @@ namespace Commons.Application.Features.Commands.PackageMenu.Create
                 }
             }
 
-            return await this.writeRepository.AddBulkAsync(packageMenus);
+            return await this.writeRepository.AddOrUpdateBulkAsync(packageMenus);
         }
         private async Task AddMenuWithParentsAsync(Guid menuId, HashSet<Guid> collectedIds)
         {

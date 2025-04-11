@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Commands\Company\Remove\" />
     <Folder Include="Features\Commands\Role\Remove\" />
     <Folder Include="Features\Commands\User\Remove\" />
   </ItemGroup>

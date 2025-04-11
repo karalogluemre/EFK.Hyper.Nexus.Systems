@@ -17,7 +17,7 @@ namespace Commons.Application.Features.Commands.Role.Create
         public async Task<BaseResponse> Handle(CreateRoleCommandRequest request, CancellationToken cancellationToken)
         {
             var role = this.mapper.Map<AppRole>(request);
-            return await this.writeRepository.AddBulkAsync(new List<AppRole> { role });
+            return await this.writeRepository.AddOrUpdateBulkAsync(new List<AppRole> { role });
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Commons.Application.Repositories.Commands;
 using Commons.Domain.Models;
-using Commons.Domain.Models.Packages;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +19,7 @@ namespace Commons.Application.Features.Commands.Company.Create
             try
             {
                 var company = this.mapper.Map<Commons.Domain.Models.Companies.Company>(request);
-                return await this.writeRepository.AddBulkAsync(new List<Commons.Domain.Models.Companies.Company> { company });
+                return await this.writeRepository.AddOrUpdateBulkAsync(new List<Commons.Domain.Models.Companies.Company> { company });
             }
             catch (Exception ex)
             {

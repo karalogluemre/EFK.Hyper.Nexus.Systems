@@ -1,4 +1,5 @@
-﻿using Commons.Domain.Models.Branches;
+﻿using Commons.Domain.Models.Adreses;
+using Commons.Domain.Models.Branches;
 using Commons.Domain.Models.Companies;
 using Commons.Domain.Models.Departments;
 using Commons.Domain.Models.Groups;
@@ -31,16 +32,21 @@ namespace Insure.Persistence.Context
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         #endregion
 
+        #region Adreses
+        public DbSet<Province> Provinces { get; set; }
+        public DbSet<District> Districts { get; set; }
+        #endregion
+
         #region Pack - Firm - Org -  
         public DbSet<Package> Packages { get; set; }
         public DbSet<PackageMenu> PackageMenus { get; set; }
         public DbSet<Company> Companies { get; set; }
-        public DbSet<Branch> Branches  { get; set; }
-        public DbSet<BranchMenu>  BranchMenus { get; set; }
-        public DbSet<Organization>  Organizations { get; set; }
-        public DbSet<OrganizationMenu> OrganizationMenus{ get; set; }
+        public DbSet<Branch> Branches { get; set; }
+        public DbSet<BranchMenu> BranchMenus { get; set; }
+        public DbSet<Organization> Organizations { get; set; }
+        public DbSet<OrganizationMenu> OrganizationMenus { get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<Group> Groups{ get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<UserMenuPermission> UserMenuPermissions { get; set; }

@@ -1,4 +1,6 @@
-﻿using Commons.Application.Features.Commands.Company.Create;
+﻿using Commons.Application.Features.Commands.Adreses;
+using Commons.Application.Features.Commands.Company.Create;
+using Commons.Application.Features.Commands.Company.Remove;
 using Commons.Application.Features.Commands.Menu.Create;
 using Commons.Application.Features.Commands.Package.Create;
 using Commons.Application.Features.Commands.Package.Remove;
@@ -9,6 +11,7 @@ using Commons.Application.Features.Commands.PackageMenu.Update;
 using Commons.Application.Features.Commands.Role.Create;
 using Commons.Application.Features.Commands.Role.Update;
 using Commons.Application.Features.Commands.User.Create;
+using Commons.Application.Features.Queries.Adresess;
 using Commons.Application.Features.Queries.Company;
 using Commons.Application.Features.Queries.Menu;
 using Commons.Application.Features.Queries.Package;
@@ -67,6 +70,15 @@ namespace Insure.Persistence.Injection
             #region Company
             services.AddScoped<IRequestHandler<GetAllCompaniesQueryRequest, BaseResponse>, GetAllCompaniesQueryHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<CreateCompanyCommandRequest, BaseResponse>, CreateCompanyCommandHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<RemoveCompanyCommandRequest, BaseResponse>, RemoveCompanyCommandHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<RemoveAllCompanyCommandRequest, BaseResponse>,RemoveAllCompanyCommandHandler<ApplicationDbContext>>();
+            #endregion
+
+            #region Adresess
+            services.AddScoped<IRequestHandler<GetAllProvincesQueryRequest, BaseResponse>, GetAllProvincesQueryHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<ProvinceAndDistrictCommandRequest, BaseResponse>, ProvinceAndDistrictCommandHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<GetDistinctByIdQueryRequest, BaseResponse>, GetDistinctByIdQueryHandler<ApplicationDbContext>>();
+
             #endregion
         }
     }

@@ -12,7 +12,7 @@ namespace Commons.Application.Features.Commands.Package.Remove
         readonly IWriteRepository<TDbContext, Commons.Domain.Models.Packages.Package> writeRepository = writeRepository;
         public async Task<BaseResponse> Handle(DeletePackageCommandRequest request, CancellationToken cancellationToken)
         {
-            return await writeRepository.DeleteAsync(Guid.Parse(request.Id));
+            return await this.writeRepository.DeleteAsync(Guid.Parse(request.Id));
         }
     }
 }

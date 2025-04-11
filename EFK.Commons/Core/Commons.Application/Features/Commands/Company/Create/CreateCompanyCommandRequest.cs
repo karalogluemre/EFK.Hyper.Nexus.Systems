@@ -5,7 +5,7 @@ namespace Commons.Application.Features.Commands.Company.Create
 {
     public class CreateCompanyCommandRequest : IRequest<BaseResponse>
     {
-
+        public string? Id { get; set; }
         // Temel Bilgiler
         public string Name { get; set; }
         public string TaxNumber { get; set; } // Vergi Numarası
