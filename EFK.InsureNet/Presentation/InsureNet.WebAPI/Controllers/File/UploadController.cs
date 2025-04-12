@@ -1,40 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
+﻿using Commons.Application.Features.Commands.File;
+using Commons.Application.Features.Queries.File;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InsureNet.WebAPI.Controllers.File
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UploadController(IWebHostEnvironment _env) : ControllerBase
+    public class UploadController(IMediator mediator) : ControllerBase
     {
-        private readonly IWebHostEnvironment _env = _env;
-        public class FileUploadRequest
+        private readonly IMediator mediator = mediator;
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> FileUpload([FromForm] UploadFileCommandRequest file)
         {
-            [Required]
-            public IFormFile File { get; set; }
+            var result = await this.mediator.Send(new UploadFileCommandRequest { File = file.File });
+            return Ok(new { id = result });
         }
 
-        [HttpPost("FileSaveUpload")]
-        [Consumes("multipart/form-data")] // Swagger için mutlaka gerekli
-        public async Task<IActionResult> FileSaveUpload([FromForm] FileUploadRequest request)
+        [HttpPost("[action]")]
+        public async Task<IActionResult> FileDownload([FromBody] DownloadFileQueryRequest request)
         {
-            var file = request.File;
-
-            if (file == null || file.Length == 0)
-                return BadRequest("Dosya geçersiz.");
-
-            var uploads = Path.Combine(_env.WebRootPath, "uploads", "logos");
-            Directory.CreateDirectory(uploads);
-
-            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-            var filePath = Path.Combine(uploads, fileName);
-
-            using var stream = new FileStream(filePath, FileMode.Create);
-            await file.CopyToAsync(stream);
-
-            var fileUrl = $"/uploads/logos/{fileName}";
-            return Ok(new { url = fileUrl });
+            var result = await this.mediator.Send(request);
+            return File(result.stream, "application/octet-stream", result.filename);
         }
 
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Preview([FromBody] PreviewFileQueryRequest request)
+        {
+            var result = await this.mediator.Send(request);
+            return File(result.Stream, result.ContentType, result.FileName);
+        }
     }
 }

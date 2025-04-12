@@ -1,6 +1,7 @@
 ﻿using Commons.Application.Features.Commands.Adreses;
 using Commons.Application.Features.Commands.Company.Create;
 using Commons.Application.Features.Commands.Company.Remove;
+using Commons.Application.Features.Commands.File;
 using Commons.Application.Features.Commands.Menu.Create;
 using Commons.Application.Features.Commands.Package.Create;
 using Commons.Application.Features.Commands.Package.Remove;
@@ -13,12 +14,14 @@ using Commons.Application.Features.Commands.Role.Update;
 using Commons.Application.Features.Commands.User.Create;
 using Commons.Application.Features.Queries.Adresess;
 using Commons.Application.Features.Queries.Company;
+using Commons.Application.Features.Queries.File;
 using Commons.Application.Features.Queries.Menu;
 using Commons.Application.Features.Queries.Package;
 using Commons.Application.Features.Queries.PackageMenu;
 using Commons.Application.Features.Queries.User;
 using Commons.Application.Token;
 using Commons.Domain.Models;
+using Commons.Domain.MongoFile;
 using Insure.Persistence.Context;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -78,6 +81,13 @@ namespace Insure.Persistence.Injection
             services.AddScoped<IRequestHandler<GetAllProvincesQueryRequest, BaseResponse>, GetAllProvincesQueryHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<ProvinceAndDistrictCommandRequest, BaseResponse>, ProvinceAndDistrictCommandHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<GetDistinctByIdQueryRequest, BaseResponse>, GetDistinctByIdQueryHandler<ApplicationDbContext>>();
+
+            #endregion
+
+            #region File
+            services.AddScoped<IRequestHandler<UploadFileCommandRequest, string>, UploadFileCommandHandler>();
+            services.AddScoped<IRequestHandler<DownloadFileQueryRequest, (Stream stream, string filename)>, DownloadFileQueryHandler>();
+            services.AddScoped<IRequestHandler<PreviewFileQueryRequest, PreviewFileQueryResponse>, PreviewFileQueryHandler>();
 
             #endregion
         }

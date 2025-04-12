@@ -1,5 +1,4 @@
-﻿using Commons.Application.Abstract.FileServices;
-using Commons.Application.Repositories.Commands;
+﻿using Commons.Application.Repositories.Commands;
 using Commons.Application.Repositories.Queries;
 using Commons.Persistence.Repositories.CrudRepositories.Commands;
 using Commons.Persistence.Repositories.CrudRepositories.Queries;
@@ -30,9 +29,10 @@ namespace Commons.Persistence.Injection
             services.AddScoped<IRabbitMQProducer,RabbitMQProducer>();
             #endregion
 
-            #region File
-            //services.AddScoped<IFileStorageService, LocalFileStorageService>();
+            #region Mongo 
+            services.AddScoped<IMongoWriteRepository, MongoWriteRepository>();
             #endregion
+
         }
     }
 }

@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
+
 namespace Commons.Application.Features.Commands.Menu.Create
 {
     public class CreateMenuCommandHandler<TDbContext>(
@@ -20,9 +21,9 @@ namespace Commons.Application.Features.Commands.Menu.Create
         {
             string jsonFilePath = @"C:\Users\emrek\OneDrive\Masaüstü\Files\EFK.System.Projects\EFK.System\EFK.System.API\EFK.Hyper.Nexus.Systems\EFK.Commons\Core\Commons.Application\JsonMenus\humanResources.json";
 
-            if (File.Exists(jsonFilePath))
+            if (System.IO.File.Exists(jsonFilePath))
             {
-                string jsonContent = await File.ReadAllTextAsync(jsonFilePath);
+                string jsonContent = await System.IO.File.ReadAllTextAsync(jsonFilePath);
                 var menuData = JsonConvert.DeserializeObject<Commons.Domain.Models.Menus.Menu>(jsonContent);
 
                 // Tüm alt öğeleri toplayıp listeye ekleyelim

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Commons.Application.Abstract.FileServices;
 using Commons.Application.Repositories.Commands;
 using Commons.Domain.Models;
 using MediatR;
@@ -16,8 +15,6 @@ namespace Commons.Application.Features.Commands.Company.Create
         {
             try
             {
-             
-
                 var company = mapper.Map<Commons.Domain.Models.Companies.Company>(request);
                 return await writeRepository.AddOrUpdateBulkAsync(new List<Commons.Domain.Models.Companies.Company> { company });
             }
