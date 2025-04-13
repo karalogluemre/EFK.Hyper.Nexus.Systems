@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Insure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250410125520_MigEmre001")]
+    [Migration("20250413142137_MigEmre001")]
     partial class MigEmre001
     {
         /// <inheritdoc />
@@ -190,8 +190,9 @@ namespace Insure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EstablishedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("EstablishedDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Iban")
                         .IsRequired()

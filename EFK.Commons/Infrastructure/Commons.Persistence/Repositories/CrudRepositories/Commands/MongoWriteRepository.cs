@@ -25,5 +25,19 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
             var fileId = await this.gridFs.UploadFromStreamAsync(file.FileName, stream);
             return fileId;
         }
+        public async Task DeleteFileAsync(string objectId)
+        {
+            try
+            {
+                if (ObjectId.TryParse(objectId, out var id))
+                {
+                    await this.gridFs.DeleteAsync(id);
+                }
+            }
+            catch (GridFSFileNotFoundException)
+            {
+                // dosya zaten yoksa problem değil
+            }
+        }
     }
 }

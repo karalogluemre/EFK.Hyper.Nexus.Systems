@@ -28,6 +28,7 @@ namespace Insure.Persistence.Injection
             services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, AppUser>>();
             services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, AppRole>>();
             services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.Models.Menus.Menu>>();
+            services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.Models.Packages.Package>>();
             services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.Models.Packages.PackageMenu>>();
             services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.Models.Companies.Company>>();
             services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.Models.Adreses.District>>();

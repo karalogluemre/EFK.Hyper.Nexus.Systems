@@ -1,6 +1,7 @@
 ﻿using Commons.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Commons.Application.Features.Commands.Company.Create
 {
@@ -37,10 +38,12 @@ namespace Commons.Application.Features.Commands.Company.Create
         public bool IsActive { get; set; } = true;
 
         // Ek Bilgiler
-        public DateTime EstablishedDate { get; set; } // Kuruluş Tarihi
-        public string? LogoUrl { get; set; }
+        public string EstablishedDate { get; set; } // Kuruluş Tarihi
 
         public Guid PackageId { get; set; }
+
+        [FromForm(Name = "logoUrl")]
+        public IFormFile LogoUrl { get; set; }
 
     }
 }

@@ -31,6 +31,8 @@ namespace Commons.Persistence.Injection
 
             #region Mongo 
             services.AddScoped<IMongoWriteRepository, MongoWriteRepository>();
+            services.AddScoped<IMongoReadRepository, MongoReadRepository>();
+
             #endregion
 
         }

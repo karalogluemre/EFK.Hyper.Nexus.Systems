@@ -22,7 +22,7 @@ namespace InsureNet.WebAPI.Controllers.PackageMenu
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> CreatePackageMenus([FromBody] CreatePackageMenuCommandRequest request)
+        public async Task<IActionResult> CreatePackageMenus([FromForm] CreatePackageMenuCommandRequest request)
         {
             BaseResponse response = await mediator.Send(request);
             return Ok(response);

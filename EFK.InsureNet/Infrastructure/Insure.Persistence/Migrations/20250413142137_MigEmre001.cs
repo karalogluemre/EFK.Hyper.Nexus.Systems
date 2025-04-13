@@ -363,7 +363,7 @@ namespace Insure.Persistence.Migrations
                     BankAccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    EstablishedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EstablishedDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LogoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),

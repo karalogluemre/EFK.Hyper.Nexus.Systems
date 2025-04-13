@@ -19,7 +19,7 @@ namespace InsureNet.WebAPI.Controllers.Company
             return Ok(response);
         }
         [HttpPost("[action]")]
-        public async Task<IActionResult> CreateCompany([FromBody] CreateCompanyCommandRequest createCompanyCommandRequest)
+        public async Task<IActionResult> CreateCompany([FromForm] CreateCompanyCommandRequest createCompanyCommandRequest)
         {
             BaseResponse response = await this.mediator.Send(createCompanyCommandRequest);
             return Ok(response);

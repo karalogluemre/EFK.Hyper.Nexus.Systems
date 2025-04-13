@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Commons.Application.Features.Queries.Company
 {
     public class GetAllCompaniesQueryHandler<TDbContext>(
-      IElasticSearchReadRepository<TDbContext, Commons.Domain.Models.Companies.Company> elasticReadRepository
+      IElasticSearchReadRepository<TDbContext, Commons.Domain.Models.Companies.Company> elasticReadRepository,
+      IMongoReadRepository mongoReadRepository
+
   ) : IRequestHandler<GetAllCompaniesQueryRequest, BaseResponse> where TDbContext : DbContext
     {
         private readonly IElasticSearchReadRepository<TDbContext, Commons.Domain.Models.Companies.Company> elasticSearchReadRepository = elasticReadRepository;

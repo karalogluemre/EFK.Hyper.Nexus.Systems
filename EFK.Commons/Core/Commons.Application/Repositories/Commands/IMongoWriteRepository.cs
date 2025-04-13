@@ -7,5 +7,6 @@ namespace Commons.Application.Repositories.Commands
     public interface IMongoWriteRepository
     {
         Task<ObjectId> UploadFileAsync(IFormFile file);
+        Task DeleteFileAsync(string objectId);
     }
 }

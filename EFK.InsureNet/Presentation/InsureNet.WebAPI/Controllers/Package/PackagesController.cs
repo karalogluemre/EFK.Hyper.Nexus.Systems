@@ -27,7 +27,7 @@ namespace InsureNet.WebAPI.Controllers.Package
             return Ok(response);
         }
         [HttpPost("[action]")]
-        public async Task<IActionResult> CreatePackage([FromBody] CreatePackageCommandRequest createPackageCommandRequest)
+        public async Task<IActionResult> CreatePackage([FromForm] CreatePackageCommandRequest createPackageCommandRequest)
         {
             BaseResponse response = await this.mediator.Send(createPackageCommandRequest);
             return Ok(response);

@@ -38,7 +38,7 @@ namespace Commons.Domain.Models.Companies
         public bool IsActive { get; set; } = true;
 
         // Ek Bilgiler
-        public DateTime EstablishedDate { get; set; } // Kuruluş Tarihi
+        public string EstablishedDate { get; set; } // Kuruluş Tarihi
         public string? LogoUrl { get; set; }
 
         public ICollection<Branch> Branches { get; set; } = new List<Branch>();

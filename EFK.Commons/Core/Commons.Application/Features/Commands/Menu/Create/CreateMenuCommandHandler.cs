@@ -19,7 +19,7 @@ namespace Commons.Application.Features.Commands.Menu.Create
 
         public async Task<BaseResponse> Handle(CreateMenuCommandRequest request, CancellationToken cancellationToken)
         {
-            string jsonFilePath = @"C:\Users\emrek\OneDrive\Masaüstü\Files\EFK.System.Projects\EFK.System\EFK.System.API\EFK.Hyper.Nexus.Systems\EFK.Commons\Core\Commons.Application\JsonMenus\humanResources.json";
+            string jsonFilePath = @"C:\Projects\EFK.System.Projects\EFK.System\EFK.System.API\EFK.Hyper.Nexus.Systems\EFK.Commons\Core\Commons.Application\JsonMenus\humanResources.json";
 
             if (System.IO.File.Exists(jsonFilePath))
             {
