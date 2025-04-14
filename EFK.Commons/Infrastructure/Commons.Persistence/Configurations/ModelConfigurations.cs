@@ -1,4 +1,5 @@
-﻿using Commons.Persistence.Configurations.Branches;
+﻿using Commons.Domain.MongoFile;
+using Commons.Persistence.Configurations.Branches;
 using Commons.Persistence.Configurations.Companies;
 using Commons.Persistence.Configurations.Departments;
 using Commons.Persistence.Configurations.Groups;
@@ -33,6 +34,7 @@ namespace Commons.Persistence.Configurations
             modelBuilder.ApplyConfiguration(new UnitConfiguration());
             modelBuilder.ApplyConfiguration(new UserUnitConfiguration());
             modelBuilder.ApplyConfiguration(new RoleMenuPermissionConfiguration());
+
         }
     }
 }

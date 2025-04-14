@@ -2,6 +2,7 @@
 using Commons.Domain.Models;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
+using Nest;
 using Newtonsoft.Json;
 
 namespace Commons.Persistence.Repositories.CrudRepositories.Commands
@@ -241,6 +242,28 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
             catch (Exception ex)
             {
                 return new BaseResponse { Succeeded = false, Message = $"Toplu kayıt güncellenirken hata oluştu: {ex.Message}" };
+            }
+        }
+        public async Task<BaseResponse> RemoveAsync(List<TEntity> entities)
+        {
+            try
+            {
+                this.context.Set<TEntity>().RemoveRange(entities);
+                await this.context.SaveChangesAsync();
+
+                return new BaseResponse
+                {
+                    Succeeded = true,
+                    Message = "Kayıtlar başarıyla silindi"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
+                {
+                    Succeeded = false,
+                    Message = $"Silme sırasında hata: {ex.Message}"
+                };
             }
         }
 

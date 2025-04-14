@@ -57,6 +57,30 @@ namespace Insure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FileMetaDatas",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ObjectId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReferenceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReferenceType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UploadedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tag = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileMetaDatas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Menu",
                 columns: table => new
                 {
@@ -72,7 +96,7 @@ namespace Insure.Persistence.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -93,7 +117,7 @@ namespace Insure.Persistence.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -111,7 +135,7 @@ namespace Insure.Persistence.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -239,7 +263,7 @@ namespace Insure.Persistence.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -363,11 +387,10 @@ namespace Insure.Persistence.Migrations
                     BankAccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    EstablishedDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LogoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EstablishedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -415,7 +438,7 @@ namespace Insure.Persistence.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -438,13 +461,33 @@ namespace Insure.Persistence.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Branches", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Branches_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CompanyFile",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FileId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanyFile", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CompanyFile_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "Id",
@@ -485,7 +528,7 @@ namespace Insure.Persistence.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -508,7 +551,7 @@ namespace Insure.Persistence.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -579,7 +622,7 @@ namespace Insure.Persistence.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -626,7 +669,7 @@ namespace Insure.Persistence.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -742,6 +785,11 @@ namespace Insure.Persistence.Migrations
                 column: "PackageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CompanyFile_CompanyId",
+                table: "CompanyFile",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Departments_GroupId",
                 table: "Departments",
                 column: "GroupId");
@@ -849,7 +897,13 @@ namespace Insure.Persistence.Migrations
                 name: "BranchMenus");
 
             migrationBuilder.DropTable(
+                name: "CompanyFile");
+
+            migrationBuilder.DropTable(
                 name: "Districts");
+
+            migrationBuilder.DropTable(
+                name: "FileMetaDatas");
 
             migrationBuilder.DropTable(
                 name: "OrganizationMenus");

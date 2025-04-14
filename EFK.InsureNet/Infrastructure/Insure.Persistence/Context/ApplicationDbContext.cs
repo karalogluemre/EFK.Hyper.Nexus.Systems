@@ -8,6 +8,7 @@ using Commons.Domain.Models.Packages;
 using Commons.Domain.Models.Role;
 using Commons.Domain.Models.Units;
 using Commons.Domain.Models.User;
+using Commons.Domain.MongoFile;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -54,6 +55,11 @@ namespace Insure.Persistence.Context
         public DbSet<UserOrganization> UserOrganizations { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<UserUnit> UserUnits { get; set; }
+        #endregion
+
+        #region File
+        public DbSet<FileMetaData> FileMetaDatas { get; set; }
+
         #endregion
     }
 }

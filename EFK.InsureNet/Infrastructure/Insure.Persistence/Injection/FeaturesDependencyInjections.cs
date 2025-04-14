@@ -1,4 +1,5 @@
-﻿using Commons.Application.Features.Commands.Adreses;
+﻿using Commons.Application.Abstract.Dto.File;
+using Commons.Application.Features.Commands.Adreses;
 using Commons.Application.Features.Commands.Company.Create;
 using Commons.Application.Features.Commands.Company.Remove;
 using Commons.Application.Features.Commands.File;
@@ -85,9 +86,9 @@ namespace Insure.Persistence.Injection
             #endregion
 
             #region File
-            services.AddScoped<IRequestHandler<UploadFileCommandRequest, string>, UploadFileCommandHandler>();
+            services.AddScoped<IRequestHandler<UploadFileCommandRequest, string>, UploadFileCommandHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<DownloadFileQueryRequest, (Stream stream, string filename)>, DownloadFileQueryHandler>();
-            services.AddScoped<IRequestHandler<PreviewFileQueryRequest, PreviewFileQueryResponse>, PreviewFileQueryHandler>();
+            services.AddScoped<IRequestHandler<PreviewFileQueryRequest, PreviewFileQueryResponse>, PreviewFileQueryHandler<ApplicationDbContext>>();
 
             #endregion
         }

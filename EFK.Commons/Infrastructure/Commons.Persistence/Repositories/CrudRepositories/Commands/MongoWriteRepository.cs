@@ -11,7 +11,6 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
     {
         private readonly IMongoDatabase database;
         private readonly GridFSBucket gridFs;
-
         public MongoWriteRepository(IConfiguration config)
         {
             var client = new MongoClient(config["MongoSettings:ConnectionString"]);
@@ -19,12 +18,26 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
             this.gridFs = new GridFSBucket(this.database);
         }
 
-        public async Task<ObjectId> UploadFileAsync(IFormFile file)
+        public async Task<string> UploadFileAsync(IFormFile file, Guid referenceId, string tag, string referanceName)
         {
             using var stream = file.OpenReadStream();
-            var fileId = await this.gridFs.UploadFromStreamAsync(file.FileName, stream);
-            return fileId;
+
+            var options = new GridFSUploadOptions
+            {
+                Metadata = new BsonDocument
+                {
+                    { "ReferenceId", referenceId.ToString() },
+                    { "ReferenceType", "Company" },
+                    { "Tag", tag },
+                    { "ContentType", file.ContentType }
+                }
+            };
+
+            var fileId = await gridFs.UploadFromStreamAsync(file.FileName, stream, options);
+
+            return fileId.ToString(); // veya metadata.Id.ToString()
         }
+
         public async Task DeleteFileAsync(string objectId)
         {
             try

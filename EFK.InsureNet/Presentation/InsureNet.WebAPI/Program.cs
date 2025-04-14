@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddPersistenceServices<ApplicationDbContext>(builder.Configuration, "Admin", "AdminLog");
 builder.Services.AddIdentityRegistration<ApplicationDbContext>(builder.Configuration);
+
 builder.Services.SwaggerGenRegistration(builder.Configuration);
 builder.Services.ApplyAllConfigurations(builder.Configuration);
 builder.Services.CommonDependencyInjectionService(builder.Configuration);

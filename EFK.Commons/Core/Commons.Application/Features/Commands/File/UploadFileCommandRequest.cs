@@ -8,5 +8,7 @@ namespace Commons.Application.Features.Commands.File
     {
         [FromForm(Name = "file")]
         public IFormFile File { get; set; }
+
+        public Guid Id { get; set; }
     }
 }

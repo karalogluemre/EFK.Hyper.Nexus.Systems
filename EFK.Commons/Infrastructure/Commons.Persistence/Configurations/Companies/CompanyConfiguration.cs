@@ -24,6 +24,10 @@ namespace Commons.Persistence.Configurations.Companies
                    .HasForeignKey(o => o.CompanyId)
                    .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasMany(c => c.CompanyFiles)
+               .WithOne(cf => cf.Company)
+               .HasForeignKey(cf => cf.CompanyId)
+               .OnDelete(DeleteBehavior.Cascade); // Şirket silinirse dosyalar da silinir
 
         }
     }
