@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
+
 namespace Commons.Application.Features.Commands.Menu.Create
 {
     public class CreateMenuCommandHandler<TDbContext>(
@@ -18,18 +19,18 @@ namespace Commons.Application.Features.Commands.Menu.Create
 
         public async Task<BaseResponse> Handle(CreateMenuCommandRequest request, CancellationToken cancellationToken)
         {
-            string jsonFilePath = @"C:\Users\emrek\OneDrive\Masaüstü\Files\EFK.System.Projects\EFK.System\EFK.System.API\EFK.Hyper.Nexus.Systems\EFK.Commons\Core\Commons.Application\JsonMenus\humanResources.json";
+            string jsonFilePath = @"C:\Projects\EFK.System.Projects\EFK.System\EFK.System.API\EFK.Hyper.Nexus.Systems\EFK.Commons\Core\Commons.Application\JsonMenus\humanResources.json";
 
-            if (File.Exists(jsonFilePath))
+            if (System.IO.File.Exists(jsonFilePath))
             {
-                string jsonContent = await File.ReadAllTextAsync(jsonFilePath);
+                string jsonContent = await System.IO.File.ReadAllTextAsync(jsonFilePath);
                 var menuData = JsonConvert.DeserializeObject<Commons.Domain.Models.Menus.Menu>(jsonContent);
 
                 // Tüm alt öğeleri toplayıp listeye ekleyelim
                 var menuList = new List<Commons.Domain.Models.Menus.Menu> { menuData };
                 CollectAllMenus(menuData, menuList);
 
-                return await this.writeRepository.AddBulkAsync(menuList);
+                return await this.writeRepository.AddOrUpdateBulkAsync(menuList);
             }
             return new BaseResponse { Message = "File not found", Succeeded = false };
 

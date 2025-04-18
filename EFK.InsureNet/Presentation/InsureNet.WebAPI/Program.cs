@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddPersistenceServices<ApplicationDbContext>(builder.Configuration, "Admin", "AdminLog");
 builder.Services.AddIdentityRegistration<ApplicationDbContext>(builder.Configuration);
+
 builder.Services.SwaggerGenRegistration(builder.Configuration);
 builder.Services.ApplyAllConfigurations(builder.Configuration);
 builder.Services.CommonDependencyInjectionService(builder.Configuration);
@@ -26,7 +27,14 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
         options.RoutePrefix = string.Empty;
     });
+    app.UseDeveloperExceptionPage();
 }
+else
+{
+    app.UseExceptionHandler("/error");
+    app.UseHsts();
+}
+
 app.UseWatchDogExceptionLogger();
 
 app.UseHttpsRedirection();

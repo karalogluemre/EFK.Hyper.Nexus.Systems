@@ -2,6 +2,7 @@
 using Commons.Domain.Models;
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
+using Nest;
 using Newtonsoft.Json;
 
 namespace Commons.Persistence.Repositories.CrudRepositories.Commands
@@ -42,47 +43,56 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
             }
         }
 
-        public async Task<BaseResponse> AddBulkAsync(ICollection<TEntity> entities)
+        public async Task<BaseResponse> AddOrUpdateBulkAsync(ICollection<TEntity> entities)
         {
             try
             {
-                // Boş olan ID'leri otomatik doldur
+                var toInsert = new List<TEntity>();
+                var toUpdate = new List<TEntity>();
+
                 foreach (var entity in entities)
                 {
                     var propertyInfo = entity.GetType().GetProperty("Id");
-                    if (propertyInfo != null)
+
+                    if (propertyInfo == null) continue;
+
+                    var idValue = (Guid)propertyInfo.GetValue(entity);
+
+                    if (idValue == Guid.Empty)
                     {
-                        var currentId = (Guid)propertyInfo.GetValue(entity);
-                        if (currentId == Guid.Empty)
+                        var newId = Guid.NewGuid();
+                        propertyInfo.SetValue(entity, newId);
+                        toInsert.Add(entity);
+                    }
+                    else
+                    {
+                        // Varlığını kontrol et
+                        var existing = await this.context.Set<TEntity>().FindAsync(idValue);
+                        if (existing != null)
                         {
-                            propertyInfo.SetValue(entity, Guid.NewGuid());
+                            this.context.Entry(existing).CurrentValues.SetValues(entity);
+                            toUpdate.Add(entity);
+                        }
+                        else
+                        {
+                            toInsert.Add(entity); // Kayıt yoksa eklemeye al
                         }
                     }
                 }
 
                 this.context.ChangeTracker.AutoDetectChangesEnabled = false;
 
-                await this.context.BulkInsertAsync(entities);
+                if (toInsert.Any())
+                    await this.context.BulkInsertAsync(toInsert);
 
-                // İç içe geçmiş ilişkili koleksiyonları topla
-                var subEntities = new List<TEntity>();
+                if (toUpdate.Any())
+                    await this.context.BulkUpdateAsync(toUpdate);
 
-                foreach (var entity in entities)
-                {
-                    CollectNestedEntities(entity, subEntities);
-                }
-
-                // Eğer alt nesneler varsa onları da ekle
-                if (subEntities.Any())
-                {
-                    await this.context.BulkInsertAsync(subEntities);
-                }
                 await this.context.SaveChangesAsync();
-
 
                 this.context.ChangeTracker.AutoDetectChangesEnabled = true;
 
-                // Elasticsearch'e ekleme
+                // Elasticsearch senkronizasyonu
                 foreach (var entity in entities)
                 {
                     try
@@ -91,19 +101,29 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
                     }
                     catch (Exception)
                     {
-                        var jsonData = JsonConvert.SerializeObject(entity);
+                        var json = JsonConvert.SerializeObject(entity);
                         var entityName = typeof(TEntity).Name;
-                        this.rabbitMQProducer.Publish(jsonData, entityName);
+                        rabbitMQProducer.Publish(json, entityName);
                     }
                 }
 
-                return new BaseResponse { Succeeded = true, Message = $"{entities.Count} kayıt başarıyla eklendi.", Data = entities };
+                return new BaseResponse
+                {
+                    Succeeded = true,
+                    Message = $"{entities.Count} kayıt başarıyla işlendi.",
+                    Data = entities
+                };
             }
             catch (Exception ex)
             {
-                return new BaseResponse { Succeeded = false, Message = $"Toplu kayıt eklenirken hata oluştu: {ex.Message}" };
+                return new BaseResponse
+                {
+                    Succeeded = false,
+                    Message = $"Hata: {ex.Message}"
+                };
             }
         }
+
         private void CollectNestedEntities(object entity, List<TEntity> subEntities)
         {
             if (entity == null)
@@ -223,6 +243,28 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
             catch (Exception ex)
             {
                 return new BaseResponse { Succeeded = false, Message = $"Toplu kayıt güncellenirken hata oluştu: {ex.Message}" };
+            }
+        }
+        public async Task<BaseResponse> RemoveAsync(List<TEntity> entities)
+        {
+            try
+            {
+                this.context.Set<TEntity>().RemoveRange(entities);
+                await this.context.SaveChangesAsync();
+
+                return new BaseResponse
+                {
+                    Succeeded = true,
+                    Message = "Kayıtlar başarıyla silindi"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse
+                {
+                    Succeeded = false,
+                    Message = $"Silme sırasında hata: {ex.Message}"
+                };
             }
         }
 

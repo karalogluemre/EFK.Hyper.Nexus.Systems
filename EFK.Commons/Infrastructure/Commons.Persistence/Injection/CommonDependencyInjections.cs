@@ -28,6 +28,13 @@ namespace Commons.Persistence.Injection
             #region Rabbit MQ
             services.AddScoped<IRabbitMQProducer,RabbitMQProducer>();
             #endregion
+
+            #region Mongo 
+            services.AddScoped<IMongoWriteRepository, MongoWriteRepository>();
+            services.AddScoped(typeof(IMongoReadRepository<>), typeof(MongoReadRepository<>));
+
+            #endregion
+
         }
     }
 }

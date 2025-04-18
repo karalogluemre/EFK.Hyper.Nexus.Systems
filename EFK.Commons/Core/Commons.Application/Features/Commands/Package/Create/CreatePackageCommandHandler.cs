@@ -17,7 +17,7 @@ namespace Commons.Application.Features.Commands.Package.Create
         public async Task<BaseResponse> Handle(CreatePackageCommandRequest request, CancellationToken cancellationToken)
         {
             var package = this.mapper.Map<Commons.Domain.Models.Packages.Package>(request);
-            return await this.writeRepository.AddBulkAsync(new List<Commons.Domain.Models.Packages.Package> { package });
+            return await this.writeRepository.AddOrUpdateBulkAsync(new List<Commons.Domain.Models.Packages.Package> { package });
         }
     }
 }

@@ -7,6 +7,6 @@
         public bool? IsDeleted { get; set; }
         public bool? IsActive { get; set; }
         virtual public DateTime? UpdatedDate { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }

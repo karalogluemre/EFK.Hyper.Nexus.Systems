@@ -1,4 +1,9 @@
-﻿using Commons.Application.Features.Commands.Menu.Create;
+﻿using Commons.Application.Abstract.Dto.File;
+using Commons.Application.Features.Commands.Adreses;
+using Commons.Application.Features.Commands.Company.Create;
+using Commons.Application.Features.Commands.Company.Remove;
+using Commons.Application.Features.Commands.File;
+using Commons.Application.Features.Commands.Menu.Create;
 using Commons.Application.Features.Commands.Package.Create;
 using Commons.Application.Features.Commands.Package.Remove;
 using Commons.Application.Features.Commands.Package.Update;
@@ -8,12 +13,16 @@ using Commons.Application.Features.Commands.PackageMenu.Update;
 using Commons.Application.Features.Commands.Role.Create;
 using Commons.Application.Features.Commands.Role.Update;
 using Commons.Application.Features.Commands.User.Create;
+using Commons.Application.Features.Queries.Adresess;
+using Commons.Application.Features.Queries.Company;
+using Commons.Application.Features.Queries.File;
 using Commons.Application.Features.Queries.Menu;
 using Commons.Application.Features.Queries.Package;
 using Commons.Application.Features.Queries.PackageMenu;
 using Commons.Application.Features.Queries.User;
 using Commons.Application.Token;
 using Commons.Domain.Models;
+using Commons.Domain.MongoFile;
 using Insure.Persistence.Context;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -59,6 +68,27 @@ namespace Insure.Persistence.Injection
             services.AddScoped<IRequestHandler<UpdatePackageMenuCommandRequest, BaseResponse>, UpdatePackageMenuCommandHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<RemovePackageMenuCommandRequest, BaseResponse>, RemovePackageMenuCommandHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<RemoveBulkAllPackageMenuCommandRequest, BaseResponse>, RemoveBulkAllPackageMenuCommandHandler<ApplicationDbContext>>();
+
+            #endregion
+
+            #region Company
+            services.AddScoped<IRequestHandler<GetAllCompaniesQueryRequest, BaseResponse>, GetAllCompaniesQueryHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<CreateCompanyCommandRequest, BaseResponse>, CreateCompanyCommandHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<RemoveCompanyCommandRequest, BaseResponse>, RemoveCompanyCommandHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<RemoveAllCompanyCommandRequest, BaseResponse>,RemoveAllCompanyCommandHandler<ApplicationDbContext>>();
+            #endregion
+
+            #region Adresess
+            services.AddScoped<IRequestHandler<GetAllProvincesQueryRequest, BaseResponse>, GetAllProvincesQueryHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<ProvinceAndDistrictCommandRequest, BaseResponse>, ProvinceAndDistrictCommandHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<GetDistinctByIdQueryRequest, BaseResponse>, GetDistinctByIdQueryHandler<ApplicationDbContext>>();
+
+            #endregion
+
+            #region File
+            services.AddScoped<IRequestHandler<UploadFileCommandRequest, string>, UploadFileCommandHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<DownloadFileQueryRequest, (Stream stream, string filename)>, DownloadFileQueryHandler>();
+            services.AddScoped<IRequestHandler<PreviewFileQueryRequest, PreviewFileQueryResponse>, PreviewFileQueryHandler<ApplicationDbContext>>();
 
             #endregion
         }

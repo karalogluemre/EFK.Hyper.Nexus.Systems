@@ -8,10 +8,11 @@ namespace Commons.Application.Repositories.Commands
     where TEntity : class
     {
         Task<BaseResponse> AddAsync(TEntity entity);
-        Task<BaseResponse> AddBulkAsync(ICollection<TEntity> entities);
+        Task<BaseResponse> AddOrUpdateBulkAsync(ICollection<TEntity> entities);
         Task<BaseResponse> UpdateBulkAsync(ICollection<TEntity> entities);
         Task<BaseResponse> DeleteAsync(Guid id);
         Task<BaseResponse> RemoveRangeAsync(List<TEntity> entities);
+        Task<BaseResponse> RemoveAsync(List<TEntity> entities);
 
     }
 }

@@ -16,18 +16,19 @@ namespace Commons.Application.Features.Queries.PackageMenu
         {
             var allPackageMenus = await this.packageMenuElasticReadRepository.GetAllFromElasticSearchAsync();
             var distinctPackageMenuPairs = allPackageMenus
-                .GroupBy(pm => new { pm.PackageId, pm.MenuId })
+                .GroupBy(pm => new { pm.PackageId, pm.MenuId,pm.Id })
                 .Select(g => g.First())
                 .ToList();
 
             var uniquePackageIds = distinctPackageMenuPairs.Select(pm => pm.PackageId).Distinct().ToList();
-            var allPackages = await this.packageElasticReadRepository.GetAllFromElasticSearchAsync();
+            var allPackages = await packageElasticReadRepository.GetAllFromElasticSearchAsync();
+
             var filteredPackages = allPackages
                 .Where(p => uniquePackageIds.Contains(p.Id))
-                .Select(p =>
+                .Select(p => new
                 {
-                    p.PackageMenus = distinctPackageMenuPairs.Where(pm => pm.PackageId == p.Id).ToList();
-                    return p;
+                    Id = p.Id,
+                    PackageMenus = distinctPackageMenuPairs.Where(pm => pm.PackageId == p.Id).ToList()
                 })
                 .ToList();
 

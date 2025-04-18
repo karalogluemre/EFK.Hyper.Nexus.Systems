@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver.GridFS;
+using MongoDB.Driver;
 using WatchDog;
 using WatchDog.src.Enums;
 
@@ -22,6 +24,21 @@ namespace Commons.Persistence.Registrations
                 opt.SetExternalDbConnString = configuration.GetConnectionString(log);
                 opt.DbDriverOption = WatchDogDbDriverEnum.MSSQL;
             });
+
+            services.AddSingleton<IMongoClient>(sp =>
+            {
+                var config = sp.GetRequiredService<IConfiguration>();
+                return new MongoClient(config["MongoSettings:ConnectionString"]);
+            });
+
+            services.AddScoped(sp =>
+            {
+                var config = sp.GetRequiredService<IConfiguration>();
+                var client = sp.GetRequiredService<IMongoClient>();
+                var database = client.GetDatabase(config["MongoSettings:DatabaseName"]);
+                return new GridFSBucket(database);
+            });
+
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", builder =>

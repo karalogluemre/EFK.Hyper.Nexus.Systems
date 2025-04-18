@@ -9,62 +9,82 @@ namespace Commons.Application.Features.Commands.PackageMenu.Create
 {
     public class CreatePackageMenuCommandHandler<TDbContext>(
     IWriteRepository<TDbContext, Commons.Domain.Models.Packages.PackageMenu> writeRepository,
+    IReadRepository<TDbContext, Commons.Domain.Models.Packages.PackageMenu> readRepository,
     IReadRepository<TDbContext, Commons.Domain.Models.Menus.Menu> menuReadRepository,
     IMapper mapper
 ) : IRequestHandler<CreatePackageMenuCommandRequest, BaseResponse> where TDbContext : DbContext
     {
         readonly private IWriteRepository<TDbContext, Commons.Domain.Models.Packages.PackageMenu> writeRepository = writeRepository;
-        IReadRepository<TDbContext, Commons.Domain.Models.Menus.Menu> menuReadRepository = menuReadRepository;
+        readonly private IReadRepository<TDbContext, Commons.Domain.Models.Menus.Menu> menuReadRepository = menuReadRepository;
+        readonly private IReadRepository<TDbContext, Commons.Domain.Models.Packages.PackageMenu> readRepository = readRepository;
 
         readonly private IMapper mapper = mapper;
 
         public async Task<BaseResponse> Handle(CreatePackageMenuCommandRequest request, CancellationToken cancellationToken)
         {
-            var packageMenus = new List<Commons.Domain.Models.Packages.PackageMenu>();
-            var existingCombinations = new HashSet<(Guid PackageId, Guid MenuId)>();
+            if (request.PackageIds == null || !request.PackageIds.Any())
+                return new BaseResponse { Succeeded = false, Message = "En az bir paket seçilmelidir." };
 
-            foreach (var packageIdString in request.PackageIds)
+            if (request.MenuIds == null || !request.MenuIds.Any())
+                return new BaseResponse { Succeeded = false, Message = "En az bir menü seçilmelidir." };
+
+            // 1️⃣ Tüm menüleri getir (id, menuId, ... diğer alanlar)
+            var allMenus = await this.menuReadRepository
+                .GetAll()
+                .ToListAsync(cancellationToken);
+
+            // 2️⃣ Tüm parent'larıyla birlikte seçilen menuId'leri genişlet
+            var allMenuIdsToAssign = new HashSet<Guid>();
+
+            foreach (var menuId in request.MenuIds)
             {
-                if (Guid.TryParse(packageIdString.ToString(), out Guid packageGuid))
+                allMenuIdsToAssign.Add(menuId);
+
+                var current = allMenus.FirstOrDefault(m => m.Id == menuId);
+
+                while (current?.MenuId != null && current.MenuId != Guid.Empty)
                 {
-                    foreach (var menuIdString in request.MenuIds)
-                    {
-                        if (Guid.TryParse(menuIdString.ToString(), out Guid menuGuid))
-                        {
-                            var allRelatedMenuIds = new HashSet<Guid>();
-                            await AddMenuWithParentsAsync(menuGuid, allRelatedMenuIds);
+                    if (!allMenuIdsToAssign.Add(current.MenuId.Value))
+                        break; // zaten eklenmişse döngüyü kır
 
-                            foreach (var relatedMenuId in allRelatedMenuIds)
-                            {
-                                var key = (PackageId: packageGuid, MenuId: relatedMenuId);
-
-                                if (!existingCombinations.Contains(key))
-                                {
-                                    packageMenus.Add(new Commons.Domain.Models.Packages.PackageMenu
-                                    {
-                                        PackageId = packageGuid,
-                                        MenuId = relatedMenuId
-                                    });
-
-                                    existingCombinations.Add(key);
-                                }
-                            }
-                        }
-                    }
+                    current = allMenus.FirstOrDefault(m => m.Id == current.MenuId.Value);
+                    if (current == null)
+                        break;
                 }
             }
 
-            return await this.writeRepository.AddBulkAsync(packageMenus);
-        }
-        private async Task AddMenuWithParentsAsync(Guid menuId, HashSet<Guid> collectedIds)
-        {
-            if (!collectedIds.Add(menuId)) return;
+            // 3️⃣ Eski PackageMenu kayıtlarını sil
+            var existingEntities = await this.readRepository
+                .GetWhere(pm => request.PackageIds.Contains(pm.PackageId))
+                .ToListAsync(cancellationToken);
 
-            var menu = await this.menuReadRepository.GetByIdAsync(menuId.ToString());
-            if (menu?.MenuId != null)
+            if (existingEntities.Any())
             {
-                await AddMenuWithParentsAsync(menu.MenuId.Value, collectedIds);
+                await this.writeRepository.RemoveRangeAsync(existingEntities);
             }
+
+            // 4️⃣ Yeni kayıtları oluştur
+            var newEntities = request.PackageIds
+                .SelectMany(pkgId => allMenuIdsToAssign.Select(menuId => new Commons.Domain.Models.Packages.PackageMenu
+                {
+                    Id = Guid.NewGuid(),
+                    PackageId = pkgId,
+                    MenuId = menuId
+                }))
+                .DistinctBy(pm => new { pm.PackageId, pm.MenuId })
+                .ToList();
+
+            if (newEntities.Any())
+            {
+                return await this.writeRepository.AddOrUpdateBulkAsync(newEntities);
+            }
+
+            return new BaseResponse
+            {
+                Succeeded = true,
+                Message = "Tüm eski kayıtlar silindi, yeni ekleme yapılmadı."
+            };
         }
+
     }
 }
