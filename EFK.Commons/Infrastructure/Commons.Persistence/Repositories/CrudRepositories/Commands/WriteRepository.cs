@@ -53,6 +53,7 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
                 foreach (var entity in entities)
                 {
                     var propertyInfo = entity.GetType().GetProperty("Id");
+
                     if (propertyInfo == null) continue;
 
                     var idValue = (Guid)propertyInfo.GetValue(entity);

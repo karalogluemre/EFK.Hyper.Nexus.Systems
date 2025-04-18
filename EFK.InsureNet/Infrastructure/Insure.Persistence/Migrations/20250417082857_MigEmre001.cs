@@ -407,12 +407,18 @@ namespace Insure.Persistence.Migrations
                 name: "PackageMenus",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PackageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PackageMenus", x => new { x.PackageId, x.MenuId });
+                    table.PrimaryKey("PK_PackageMenus", x => x.Id);
                     table.ForeignKey(
                         name: "FK_PackageMenus_Menu_MenuId",
                         column: x => x.MenuId,
@@ -823,6 +829,11 @@ namespace Insure.Persistence.Migrations
                 name: "IX_PackageMenus_MenuId",
                 table: "PackageMenus",
                 column: "MenuId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PackageMenus_PackageId",
+                table: "PackageMenus",
+                column: "PackageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_AppUserId",
