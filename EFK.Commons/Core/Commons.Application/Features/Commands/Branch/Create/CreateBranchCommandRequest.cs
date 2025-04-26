@@ -1,10 +1,11 @@
-﻿using Commons.Domain.Models.Companies;
-using Commons.Domain.Models.Organizations;
+﻿using Commons.Domain.Models;
+using MediatR;
 
-namespace Commons.Domain.Models.Branches
+namespace Commons.Application.Features.Commands.Branch.Create
 {
-    public class Branch : BaseEntity
+    public class CreateBranchCommandRequest : IRequest<BaseResponse>
     {
+        public Guid Id { get; set; }
         public Guid CompanyId { get; set; }
         public string Name { get; set; }
         public string BranchCode { get; set; }
@@ -24,9 +25,6 @@ namespace Commons.Domain.Models.Branches
 
         public string ManagerName { get; set; }
         public string ManagerPhone { get; set; }
-        
-        public Company Company { get; set; }
-        public ICollection<BranchMenu> BranchMenus { get; set; } = new List<BranchMenu>();
-        public ICollection<Organization> Organizations { get; set; } = new List<Organization>();
+
     }
 }

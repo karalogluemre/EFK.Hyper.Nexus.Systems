@@ -51,6 +51,7 @@ public static class IdentityRegistration
         })
         .AddJwtBearer(options =>
         {
+            options.RequireHttpsMetadata = false;
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,

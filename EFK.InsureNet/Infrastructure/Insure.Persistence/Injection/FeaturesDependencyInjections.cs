@@ -1,5 +1,7 @@
 ﻿using Commons.Application.Abstract.Dto.File;
 using Commons.Application.Features.Commands.Adreses;
+using Commons.Application.Features.Commands.Branch.Create;
+using Commons.Application.Features.Commands.Branch.Remove;
 using Commons.Application.Features.Commands.Company.Create;
 using Commons.Application.Features.Commands.Company.Remove;
 using Commons.Application.Features.Commands.File;
@@ -14,6 +16,7 @@ using Commons.Application.Features.Commands.Role.Create;
 using Commons.Application.Features.Commands.Role.Update;
 using Commons.Application.Features.Commands.User.Create;
 using Commons.Application.Features.Queries.Adresess;
+using Commons.Application.Features.Queries.Branch;
 using Commons.Application.Features.Queries.Company;
 using Commons.Application.Features.Queries.File;
 using Commons.Application.Features.Queries.Menu;
@@ -90,6 +93,13 @@ namespace Insure.Persistence.Injection
             services.AddScoped<IRequestHandler<DownloadFileQueryRequest, (Stream stream, string filename)>, DownloadFileQueryHandler>();
             services.AddScoped<IRequestHandler<PreviewFileQueryRequest, PreviewFileQueryResponse>, PreviewFileQueryHandler<ApplicationDbContext>>();
 
+            #endregion
+
+            #region Branch
+            services.AddScoped<IRequestHandler<GetAllBranchQueryRequest, BaseResponse>, GetAllBranchQueryHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<CreateBranchCommandRequest, BaseResponse>, CreateBranchCommandHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<RemoveBranchCommandRequest, BaseResponse>, RemoveBranchCommandHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<RemoveBulkAllBranchesCommandRequest, BaseResponse>, RemoveBulkAllBranchesCommandHandler<ApplicationDbContext>>();
             #endregion
         }
     }
