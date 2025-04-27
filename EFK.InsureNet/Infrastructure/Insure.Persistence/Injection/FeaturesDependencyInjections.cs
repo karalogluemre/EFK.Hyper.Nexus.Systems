@@ -2,6 +2,7 @@
 using Commons.Application.Features.Commands.Adreses;
 using Commons.Application.Features.Commands.Branch.Create;
 using Commons.Application.Features.Commands.Branch.Remove;
+using Commons.Application.Features.Commands.BranchMenu.Create;
 using Commons.Application.Features.Commands.Company.Create;
 using Commons.Application.Features.Commands.Company.Remove;
 using Commons.Application.Features.Commands.File;
@@ -17,6 +18,7 @@ using Commons.Application.Features.Commands.Role.Update;
 using Commons.Application.Features.Commands.User.Create;
 using Commons.Application.Features.Queries.Adresess;
 using Commons.Application.Features.Queries.Branch;
+using Commons.Application.Features.Queries.BranchMenu;
 using Commons.Application.Features.Queries.Company;
 using Commons.Application.Features.Queries.File;
 using Commons.Application.Features.Queries.Menu;
@@ -100,6 +102,12 @@ namespace Insure.Persistence.Injection
             services.AddScoped<IRequestHandler<CreateBranchCommandRequest, BaseResponse>, CreateBranchCommandHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<RemoveBranchCommandRequest, BaseResponse>, RemoveBranchCommandHandler<ApplicationDbContext>>();
             services.AddScoped<IRequestHandler<RemoveBulkAllBranchesCommandRequest, BaseResponse>, RemoveBulkAllBranchesCommandHandler<ApplicationDbContext>>();
+            #endregion
+
+            #region BranchMenu
+            services.AddScoped<IRequestHandler<GetBranchMenusByCompanyIdQueryRequest, BaseResponse>, GetBranchMenusByCompanyIdQueryHandler<ApplicationDbContext>>();
+            services.AddScoped<IRequestHandler<CreateBranchMenuCommandRequest, BaseResponse>, CreateBranchMenuCommandHandler<ApplicationDbContext>>();
+
             #endregion
         }
     }

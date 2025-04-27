@@ -8,7 +8,10 @@ namespace Commons.Persistence.Configurations.Branches
     {
         public void Configure(EntityTypeBuilder<BranchMenu> builder)
         {
-            builder.HasKey(bm => new { bm.BranchId, bm.MenuId });
+            builder.HasKey(pm => pm.Id);
+
+            builder.Property(pm => pm.Id)
+                   .ValueGeneratedNever(); //  Guid'leri biz atayacağız 
 
             builder.HasOne(bm => bm.Branch)
                    .WithMany(x=>x.BranchMenus)

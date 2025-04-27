@@ -517,12 +517,18 @@ namespace Insure.Persistence.Migrations
                 name: "BranchMenus",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BranchId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BranchMenus", x => new { x.BranchId, x.MenuId });
+                    table.PrimaryKey("PK_BranchMenus", x => x.Id);
                     table.ForeignKey(
                         name: "FK_BranchMenus_Branches_BranchId",
                         column: x => x.BranchId,
@@ -792,6 +798,11 @@ namespace Insure.Persistence.Migrations
                 name: "IX_Branches_CompanyId",
                 table: "Branches",
                 column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BranchMenus_BranchId",
+                table: "BranchMenus",
+                column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BranchMenus_MenuId",

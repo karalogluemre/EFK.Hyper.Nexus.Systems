@@ -2,7 +2,7 @@
 
 namespace Commons.Domain.Models.Branches
 {
-    public class BranchMenu
+    public class BranchMenu : BaseEntity
     {
         public Guid BranchId { get; set; }
         public Branch Branch { get; set; }

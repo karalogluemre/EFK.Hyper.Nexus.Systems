@@ -17,7 +17,7 @@ namespace Commons.Application.Features.Commands.Package.Remove
             {
                 var results = new List<BaseResponse>();
 
-                foreach (var packageId in request.PackageIds)
+                foreach (var packageId in request.Ids)
                 {
                     var result = await this.writeRepository.DeleteAsync(Guid.Parse(packageId));
                     results.Add(result);

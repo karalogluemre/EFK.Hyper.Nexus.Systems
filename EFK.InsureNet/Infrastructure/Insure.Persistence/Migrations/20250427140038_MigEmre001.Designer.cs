@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Insure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250426153003_MigEmre001")]
+    [Migration("20250427140038_MigEmre001")]
     partial class MigEmre001
     {
         /// <inheritdoc />
@@ -178,13 +178,33 @@ namespace Insure.Persistence.Migrations
 
             modelBuilder.Entity("Commons.Domain.Models.Branches.BranchMenu", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("BranchId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("MenuId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("BranchId", "MenuId");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
 
                     b.HasIndex("MenuId");
 
