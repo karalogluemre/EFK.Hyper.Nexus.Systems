@@ -5,30 +5,30 @@ using Commons.Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Commons.Application.Features.Commands.PackageMenu.Create
+namespace Commons.Application.Features.Commands.BranchMenu.Create
 {
-    public class CreatePackageMenuCommandHandler<TDbContext>(
-    IWriteRepository<TDbContext, Commons.Domain.Models.Packages.PackageMenu> writeRepository,
-    IReadRepository<TDbContext, Commons.Domain.Models.Packages.PackageMenu> readRepository,
+    public class CreateBranchMenuCommandHandler<TDbContext>(
+    IWriteRepository<TDbContext, Commons.Domain.Models.Branches.BranchMenu> writeRepository,
+    IReadRepository<TDbContext, Commons.Domain.Models.Branches.BranchMenu> readRepository,
     IReadRepository<TDbContext, Commons.Domain.Models.Menus.Menu> menuReadRepository,
     IMapper mapper
-) : IRequestHandler<CreatePackageMenuCommandRequest, BaseResponse> where TDbContext : DbContext
+) : IRequestHandler<CreateBranchMenuCommandRequest, BaseResponse> where TDbContext : DbContext
     {
-        readonly private IWriteRepository<TDbContext, Commons.Domain.Models.Packages.PackageMenu> writeRepository = writeRepository;
+        readonly private IWriteRepository<TDbContext, Commons.Domain.Models.Branches.BranchMenu> writeRepository = writeRepository;
         readonly private IReadRepository<TDbContext, Commons.Domain.Models.Menus.Menu> menuReadRepository = menuReadRepository;
-        readonly private IReadRepository<TDbContext, Commons.Domain.Models.Packages.PackageMenu> readRepository = readRepository;
+        readonly private IReadRepository<TDbContext, Commons.Domain.Models.Branches.BranchMenu> readRepository = readRepository;
 
         readonly private IMapper mapper = mapper;
 
-        public async Task<BaseResponse> Handle(CreatePackageMenuCommandRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResponse> Handle(CreateBranchMenuCommandRequest request, CancellationToken cancellationToken)
         {
-            if (request.PackageIds == null || !request.PackageIds.Any())
-                return new BaseResponse { Succeeded = false, Message = "En az bir paket seçilmelidir." };
+            if (request.BranchIds == null || !request.BranchIds.Any())
+                return new BaseResponse { Succeeded = false, Message = "En az bir şube seçilmelidir." };
 
             if (request.MenuIds == null || !request.MenuIds.Any())
                 return new BaseResponse { Succeeded = false, Message = "En az bir menü seçilmelidir." };
 
-            // 1️⃣ Tüm menüleri getir (id, menuId, ... diğer alanlar)
+            // Tüm menüleri getir (id, menuId, ... diğer alanlar)
             var allMenus = await this.menuReadRepository
                 .GetAll()
                 .ToListAsync(cancellationToken);
@@ -55,7 +55,7 @@ namespace Commons.Application.Features.Commands.PackageMenu.Create
 
             //  Eski PackageMenu kayıtlarını sil
             var existingEntities = await this.readRepository
-                .GetWhere(pm => request.PackageIds.Contains(pm.PackageId))
+                .GetWhere(pm => request.BranchIds.Contains(pm.BranchId))
                 .ToListAsync(cancellationToken);
 
             if (existingEntities.Any())
@@ -64,14 +64,14 @@ namespace Commons.Application.Features.Commands.PackageMenu.Create
             }
 
             // 4️⃣ Yeni kayıtları oluştur
-            var newEntities = request.PackageIds
-                .SelectMany(pkgId => allMenuIdsToAssign.Select(menuId => new Commons.Domain.Models.Packages.PackageMenu
+            var newEntities = request.BranchIds
+                .SelectMany(pkgId => allMenuIdsToAssign.Select(menuId => new Commons.Domain.Models.Branches.BranchMenu
                 {
                     Id = Guid.NewGuid(),
-                    PackageId = pkgId,
+                    BranchId = pkgId,
                     MenuId = menuId
                 }))
-                .DistinctBy(pm => new { pm.PackageId, pm.MenuId })
+                .DistinctBy(pm => new { pm.BranchId, pm.MenuId })
                 .ToList();
 
             if (newEntities.Any())
@@ -85,6 +85,5 @@ namespace Commons.Application.Features.Commands.PackageMenu.Create
                 Message = "Tüm eski kayıtlar silindi, yeni ekleme yapılmadı."
             };
         }
-
     }
 }

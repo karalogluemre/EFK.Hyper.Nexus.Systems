@@ -23,6 +23,8 @@ namespace Insure.Persistence.Injection
             services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.Models.Adreses.District>>();
             services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.Models.Adreses.Province>>();
             services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.Models.Companies.CompanyFile>>();
+            services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.Models.Branches.Branch>>();
+            services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.Models.Branches.BranchMenu>>();
             services.AddHostedService<RabbitMQConsumerService<ApplicationDbContext, Commons.Domain.MongoFile.FileMetaData>>();
             #endregion
 
@@ -37,6 +39,8 @@ namespace Insure.Persistence.Injection
             services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.Models.Adreses.Province>>();
             services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.Models.Companies.CompanyFile>>();
             services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.MongoFile.FileMetaData>>();
+            services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.Models.Branches.Branch>>();
+            services.AddHostedService<SyncElasticsearchService<ApplicationDbContext, Commons.Domain.Models.Branches.BranchMenu>>();
             #endregion
 
         }
