@@ -1,10 +1,12 @@
 ﻿using Commons.Application.Features.Commands.Adreses;
 using Commons.Application.Features.Queries.Adresess;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InsureNet.WebAPI.Controllers.Adresess
 {
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AdresessController(IMediator mediator) : ControllerBase

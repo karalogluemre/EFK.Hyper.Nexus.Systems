@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EFK.Commons", "EFK.Commons", "{2EDCC64C-EDDB-4C58-8CA7-28A2E75E934F}"
 EndProject
@@ -36,6 +36,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsureNet.WebAPI", "EFK.InsureNet\Presentation\InsureNet.WebAPI\InsureNet.WebAPI.csproj", "{77EB552C-0210-40CF-BF02-4CD4AF371540}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFK.Gateway.API", "EFK.Gateway\Presentation\EFK.Gateway.API\EFK.Gateway.API.csproj", "{E126E335-6E02-4444-B17C-C5086206FDD1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EFK.ProjectTest", "EFK.ProjectTest", "{E062E41F-49C0-4445-B28C-57291717B6E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonTest", "CommonTest", "{370C3374-7B27-484E-A71B-5C1ED5EF3626}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons", "EFK.ProjectTest\CommonTest\Commons\Commons.csproj", "{77FFFCCB-21B4-4C4D-BBA7-DAFAA6341F09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +81,10 @@ Global
 		{E126E335-6E02-4444-B17C-C5086206FDD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E126E335-6E02-4444-B17C-C5086206FDD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E126E335-6E02-4444-B17C-C5086206FDD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77FFFCCB-21B4-4C4D-BBA7-DAFAA6341F09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77FFFCCB-21B4-4C4D-BBA7-DAFAA6341F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77FFFCCB-21B4-4C4D-BBA7-DAFAA6341F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77FFFCCB-21B4-4C4D-BBA7-DAFAA6341F09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,5 +104,7 @@ Global
 		{E90FC411-3ACD-4BAB-B8E5-FAD3C053902B} = {0E90D75B-F1DD-4750-8F1A-12757094FC42}
 		{77EB552C-0210-40CF-BF02-4CD4AF371540} = {3845A807-C8BA-40A3-BF9E-E087FB2C82DB}
 		{E126E335-6E02-4444-B17C-C5086206FDD1} = {A13477A2-6173-45C1-A9DC-885710E05D53}
+		{370C3374-7B27-484E-A71B-5C1ED5EF3626} = {E062E41F-49C0-4445-B28C-57291717B6E8}
+		{77FFFCCB-21B4-4C4D-BBA7-DAFAA6341F09} = {370C3374-7B27-484E-A71B-5C1ED5EF3626}
 	EndGlobalSection
 EndGlobal

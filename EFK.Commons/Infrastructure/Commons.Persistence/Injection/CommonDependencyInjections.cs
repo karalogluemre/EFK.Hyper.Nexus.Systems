@@ -1,5 +1,7 @@
 ﻿using Commons.Application.Repositories.Commands;
+using Commons.Application.Repositories.Common;
 using Commons.Application.Repositories.Queries;
+using Commons.Persistence.Repositories.Common;
 using Commons.Persistence.Repositories.CrudRepositories.Commands;
 using Commons.Persistence.Repositories.CrudRepositories.Queries;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +22,10 @@ namespace Commons.Persistence.Injection
             services.AddScoped(typeof(IWriteRepository<,>), typeof(WriteRepository<,>));
             #endregion
 
+            #region Unit Of Work
+            services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+            #endregion
+
             #region ElasticSearch
             services.AddScoped(typeof(IElasticSearchReadRepository<,>), typeof(ElasticSearchReadRepository<,>));
             services.AddScoped(typeof(IElasticSearchWriteRepository<,>), typeof(ElasticSearchWriteRepository<,>));
@@ -32,7 +38,6 @@ namespace Commons.Persistence.Injection
             #region Mongo 
             services.AddScoped<IMongoWriteRepository, MongoWriteRepository>();
             services.AddScoped(typeof(IMongoReadRepository<>), typeof(MongoReadRepository<>));
-
             #endregion
 
         }
