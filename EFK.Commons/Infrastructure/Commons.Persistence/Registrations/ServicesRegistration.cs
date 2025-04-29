@@ -13,10 +13,14 @@ namespace Commons.Persistence.Registrations
         public static void AddPersistenceServices<TContext>(this IServiceCollection services, IConfiguration configuration, string connectionStringName, string log)
        where TContext : DbContext
         {
+            #region DbContext
             services.AddDbContext<TContext>(opt =>
             {
                 opt.UseSqlServer(configuration.GetConnectionString(connectionStringName));
             });
+            #endregion
+
+            #region Log
 
             services.AddWatchDogServices(opt =>
             {
@@ -25,6 +29,9 @@ namespace Commons.Persistence.Registrations
                 opt.DbDriverOption = WatchDogDbDriverEnum.MSSQL;
             });
 
+            #endregion
+
+            #region Mongo 
             services.AddSingleton<IMongoClient>(sp =>
             {
                 var config = sp.GetRequiredService<IConfiguration>();
@@ -38,6 +45,20 @@ namespace Commons.Persistence.Registrations
                 var database = client.GetDatabase(config["MongoSettings:DatabaseName"]);
                 return new GridFSBucket(database);
             });
+
+            #endregion
+
+            #region Redis
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = $"{configuration["RedisSettings:Host"]}:{configuration["RedisSettings:Port"]}";
+                options.InstanceName = configuration["RedisSettings:InstanceName"];
+            });
+            #endregion
+
+
+
 
             services.AddCors(opt =>
             {
@@ -58,11 +79,6 @@ namespace Commons.Persistence.Registrations
                 options.JsonSerializerOptions.MaxDepth = 64;
             });
 
-            //services.AddStackExchangeRedisCache(options =>
-            //{
-            //    options.Configuration = "localhost:6379"; // Redis sunucu adresini ve portunu belirttim
-            //    options.InstanceName = "RedisInstance";  // Redis instan için bir ad tanımladım
-            //});
         }
     }
 }

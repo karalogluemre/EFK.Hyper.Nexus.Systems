@@ -40,6 +40,11 @@ namespace Commons.Persistence.Injection
             services.AddScoped(typeof(IMongoReadRepository<>), typeof(MongoReadRepository<>));
             #endregion
 
+            #region Redis
+            services.AddScoped<IRedisReadRepository, RedisReadRepository>();
+            services.AddScoped<IRedisWriteRepository, RedisWriteRepository>();
+            #endregion
+
         }
     }
 }
