@@ -7,20 +7,16 @@ using WatchDog;
 
 namespace Commons.Persistence.Repositories.CrudRepositories.Commands
 {
-    public class SyncElasticsearchService<TDbContext, TEntity> : BackgroundService
+    public class SyncElasticsearchService<TDbContext, TEntity>(
+        IServiceScopeFactory serviceScopeFactory
+        ) : BackgroundService
        where TDbContext : DbContext
        where TEntity : class
     {
-        private readonly IServiceScopeFactory _serviceScopeFactory;
-
-        public SyncElasticsearchService(IServiceScopeFactory serviceScopeFactory)
-        {
-            _serviceScopeFactory = serviceScopeFactory;
-        }
-
+        private readonly IServiceScopeFactory serviceScopeFactory = serviceScopeFactory;
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            using var scope = _serviceScopeFactory.CreateScope();
+            using var scope = this.serviceScopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<TDbContext>();
             var elasticSearchReadRepository = scope.ServiceProvider.GetRequiredService<IElasticSearchReadRepository<TDbContext, TEntity>>();
             var elasticSearchRepository = scope.ServiceProvider.GetRequiredService<IElasticSearchWriteRepository<TDbContext, TEntity>>();
@@ -31,7 +27,6 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
 
                 WatchLogger.Log("MSSQL ile Elasticsearch senkronizasyonu başlatılıyor...");
 
-                // MSSQL'deki tüm verileri al
                 var sqlData = await context.Set<TEntity>().ToListAsync(stoppingToken);
                 if (!sqlData.Any())
                 {
@@ -41,13 +36,13 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
                 {
                     WatchLogger.Log($"MSSQL: {typeof(TEntity).Name} - Id: {GetId(sqlEntity)}");
                 }
-                // Elasticsearch'teki tüm verileri al
+              
                 var esData = await elasticSearchReadRepository.GetAllFromElasticSearchAsync();
                 foreach (var esEntity in esData)
                 {
                     WatchLogger.Log($" Elasticsearch: {typeof(TEntity).Name} - Id: {GetId(esEntity)}");
                 }
-                // MSSQL’de olup Elasticsearch’te olmayanları bul
+                
                 var missingInElastic = sqlData.Where(x => !esData.Any(y => GetId(y) == GetId(x))).ToList();
 
                 if (missingInElastic.Any())
@@ -55,8 +50,6 @@ namespace Commons.Persistence.Repositories.CrudRepositories.Commands
                     WatchLogger.Log($"{missingInElastic.Count} {typeof(TEntity).Name} kayıt Elasticsearch'e ekleniyor...");
                     await elasticSearchRepository.BulkAddToElasticSearchAsync(missingInElastic);
                 }
-
-                // **Elasticsearch'te olup MSSQL’de olmayanları bul ve sil**
 
                 var extraInElastic = esData.Where(x =>!sqlData.Any(y => GetId(y) == GetId(x))).ToList();
                 if (extraInElastic.Any())

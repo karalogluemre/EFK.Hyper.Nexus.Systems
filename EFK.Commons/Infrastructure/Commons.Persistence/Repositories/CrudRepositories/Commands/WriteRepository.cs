@@ -7,7 +7,11 @@ using Newtonsoft.Json;
 
 namespace Commons.Persistence.Repositories.CrudRepositories.Commands
 {
-    public class WriteRepository<TContext, TEntity>(TContext context, IElasticSearchWriteRepository<TContext, TEntity> elasticSearchRepository, IRabbitMQProducer rabbitMQProducer) : IWriteRepository<TContext, TEntity>
+    public class WriteRepository<TContext, TEntity>(
+        TContext context, 
+        IElasticSearchWriteRepository<TContext, TEntity> elasticSearchRepository, 
+        IRabbitMQProducer rabbitMQProducer
+        ) : IWriteRepository<TContext, TEntity>
     where TContext : DbContext
     where TEntity : class
     {
