@@ -20,7 +20,7 @@ namespace Commons.Application.Features.Queries.Package
             const string redisKey = "packages:all";
 
             var redisData = await this.redisReadRepository.GetAsync<List<Commons.Domain.Models.Packages.Package>>(redisKey);
-            if (redisData != null && redisData.Any())
+            if (redisData != null && redisData.Any() || (redisData.Count != 0 ||redisData.Count <0 ))
             {
                 return new BaseResponse
                 {

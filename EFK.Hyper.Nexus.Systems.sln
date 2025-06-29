@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EFK.Commons", "EFK.Commons"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EFK.Gateway", "EFK.Gateway", "{439EE72D-437C-4005-8E1E-AEB2B961E385}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EFK.InsureNet", "EFK.InsureNet", "{EE355023-3F8A-40F8-9269-D9814F9E2670}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EFK.System", "EFK.System", "{EE355023-3F8A-40F8-9269-D9814F9E2670}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{58F66101-A9CB-40B0-A303-96FE23E14A0A}"
 EndProject
@@ -27,13 +27,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{3845A807-C8BA-40A3-BF9E-E087FB2C82DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsureNet.Application", "EFK.InsureNet\Core\InsureNet.Application\InsureNet.Application.csproj", "{419232D2-3F75-4AA8-934F-79F8419B1907}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFK.System.Application", "EFK.System\Core\EFK.System.Application\EFK.System.Application.csproj", "{419232D2-3F75-4AA8-934F-79F8419B1907}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsureNet.Domain", "EFK.InsureNet\Core\InsureNet.Domain\InsureNet.Domain.csproj", "{B03EC3C9-9B03-4F1D-8A78-D61D90340734}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFK.System.Domain", "EFK.System\Core\EFK.System.Domain\EFK.System.Domain.csproj", "{B03EC3C9-9B03-4F1D-8A78-D61D90340734}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insure.Persistence", "EFK.InsureNet\Infrastructure\Insure.Persistence\Insure.Persistence.csproj", "{E90FC411-3ACD-4BAB-B8E5-FAD3C053902B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFK.System.Persistence", "EFK.System\Infrastructure\EFK.System.Persistence\EFK.System.Persistence.csproj", "{E90FC411-3ACD-4BAB-B8E5-FAD3C053902B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsureNet.WebAPI", "EFK.InsureNet\Presentation\InsureNet.WebAPI\InsureNet.WebAPI.csproj", "{77EB552C-0210-40CF-BF02-4CD4AF371540}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFK.System.WebAPI", "EFK.System\Presentation\EFK.System.WebAPI\EFK.System.WebAPI.csproj", "{77EB552C-0210-40CF-BF02-4CD4AF371540}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFK.Gateway.API", "EFK.Gateway\Presentation\EFK.Gateway.API\EFK.Gateway.API.csproj", "{E126E335-6E02-4444-B17C-C5086206FDD1}"
 EndProject

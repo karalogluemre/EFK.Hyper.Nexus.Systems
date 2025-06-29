@@ -1,12 +1,11 @@
 ﻿using Commons.Domain.Models.Branches;
-using Commons.Domain.Models.Packages;
 
 namespace Commons.Domain.Models.Companies
 {
     public class Company : BaseEntity
     {
         public Guid PackageId { get; set; } 
-        public Package Package { get; set; }
+        public Commons.Domain.Models.Packages.Package Packages { get; set; }
 
         // Temel Bilgiler
         public string Name { get; set; }

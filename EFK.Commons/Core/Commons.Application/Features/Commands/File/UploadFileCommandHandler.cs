@@ -1,4 +1,5 @@
 ﻿using Commons.Application.Repositories.Commands;
+using Commons.Domain.MongoFile;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,8 +11,9 @@ namespace Commons.Application.Features.Commands.File
 
         public async Task<string> Handle(UploadFileCommandRequest request, CancellationToken cancellationToken)
         {
-            var objectId = await this.mongoWriteRepository.UploadFileAsync(request.File,request.Id,"","");
-            return objectId.ToString();
+            //var objectId = await this.mongoWriteRepository.UploadFileAsync(request.File,request.Id,"","");
+            //return objectId.ToString();
+            return "";
         }
     }
 }

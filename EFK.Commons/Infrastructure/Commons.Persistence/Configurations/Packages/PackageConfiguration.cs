@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Commons.Persistence.Configurations.Packages
 {
-    public class PackageConfiguration : IEntityTypeConfiguration<Package>
+    public class PackageConfiguration : IEntityTypeConfiguration<Commons.Domain.Models.Packages.Package>
     {
-        public void Configure(EntityTypeBuilder<Package> builder)
+        public void Configure(EntityTypeBuilder<Commons.Domain.Models.Packages.Package> builder)
         {
             builder.HasKey(c => c.Id);
 
@@ -15,7 +15,7 @@ namespace Commons.Persistence.Configurations.Packages
                    .HasMaxLength(200);
 
             builder.HasMany(c => c.Companies)
-                   .WithOne(o => o.Package)
+                   .WithOne(o => o.Packages)
                    .HasForeignKey(o => o.PackageId)
                    .OnDelete(DeleteBehavior.Cascade);
 

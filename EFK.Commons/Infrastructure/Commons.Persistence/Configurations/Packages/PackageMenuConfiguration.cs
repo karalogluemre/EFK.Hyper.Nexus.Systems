@@ -13,7 +13,7 @@ namespace Commons.Persistence.Configurations.Packages
             builder.Property(pm => pm.Id)
                    .ValueGeneratedNever(); //  Guid'leri biz atayacağız 
 
-            builder.HasOne(pm => pm.Package)
+            builder.HasOne(pm => pm.Packages)
                    .WithMany(x => x.PackageMenus)
                    .HasForeignKey(pm => pm.PackageId)
                    .OnDelete(DeleteBehavior.Cascade);

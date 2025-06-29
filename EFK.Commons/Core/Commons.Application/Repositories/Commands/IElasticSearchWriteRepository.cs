@@ -10,7 +10,8 @@ namespace Commons.Application.Repositories.Commands
         Task<BaseResponse> AddToElasticSearchAsync(TEntity entity);
         Task<BaseResponse> BulkAddToElasticSearchAsync(IEnumerable<TEntity> data);
         Task<BaseResponse> BulkUpdateToElasticSearchAsync(IEnumerable<TEntity> data);
-        Task<BaseResponse> BulkDeleteFromElasticSearchAsync(IEnumerable<TEntity> data); 
+        Task<BaseResponse> BulkDeleteFromElasticSearchAsync(IEnumerable<TEntity> data);
+        Task<BaseResponse> SingleUpdateToElasticSearchAsync(TEntity entity);
 
     }
 }

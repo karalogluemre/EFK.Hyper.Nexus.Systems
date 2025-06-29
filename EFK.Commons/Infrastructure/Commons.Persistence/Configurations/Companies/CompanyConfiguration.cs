@@ -14,7 +14,7 @@ namespace Commons.Persistence.Configurations.Companies
                    .IsRequired()
                    .HasMaxLength(200);
 
-            builder.HasOne(c => c.Package)
+            builder.HasOne(c => c.Packages)
                    .WithMany(o => o.Companies)
                    .HasForeignKey(o => o.PackageId)
                    .OnDelete(DeleteBehavior.Cascade);

@@ -1,0 +1,86 @@
+[
+  {
+    "Id": 2,
+    "Name": "Admin",
+    "Hash": "P2PZmsE8yQltNDZVkg8Bf+4H1EfO0kZKq6QrVfklT/5V1qtr8Tt70e6UlAOG0BPnEE6A1z9k6mv8XXjH0u4XR3SEsXyN3z17ND7dc4a0hDtb1UBHIOBStUMlB6fzPQWZJAvRrzMa1BY=",
+    "ConfigType": "ConnectionStrings"
+  },
+  {
+    "Id": 3,
+    "Name": "AdminLog",
+    "Hash": "7atDKJb3Z7bC7FQ85ACASwyC0kpb4c9Zz+GRHvDqmt6Ro46GO6mL0nTPRA3S62YY0ENirGHutNfN2K0+6S5erHgK5IQ1PmhkcnAqB4N1S+R+U5m/hzEB1aF2N4khnS/AAeZglT6DSJk=",
+    "ConfigType": "ConnectionStrings"
+  },
+  {
+    "Id": 4,
+    "Name": "Piyasalar",
+    "Hash": "+JoAPW4cSb4S3dhN/V1slurEeDWuZHHnHy9i+dxwZOIFrJwL/2WKaVuZ+0va5jv6JpbB2imeVZDGoLCsEjG6p2HQ9Kgyf3AgkJRZn3BXxVmf9xaZvFkdWcfzTh5H3N/zRc+A+o2MNpc+QcWzHkDbMNGD3NAq1xOmH57QmOVs2t2BB2feJUBu2AmRjhTP4lzM",
+    "ConfigType": "ConnectionStrings"
+  },
+  {
+    "Id": 5,
+    "Name": "PiyasalarLog",
+    "Hash": "+JoAPW4cSb4S3dhN/V1sln9JKW/BoMJBy5r3RmXkRgrIONu75CZVSxZ4VJrTSi39i2AYvuQ8wfjT2Gn8UhJPWGB55gBEDakYB9/I9d5aai5vI1P1DMQk8CcHMhHUxKnSiqEj66wxqXErK2oznSGq6MtKtPDKvNPVR116iVo1V/DyAIb7HLeK86ujjddvTdoq",
+    "ConfigType": "ConnectionStrings"
+  },
+  {
+    "Id": 6,
+    "Name": "ElasticSearch",
+    "Hash": "Fk38cqdpymkLxrM4XLeUztmAGpUZOE8h28ENtxzgDfWxePP8uUihhkAKsnZW+JSC",
+    "ConfigType": "ElasticSearchUrl"
+  },
+  {
+    "Id": 7,
+    "Name": "ElasticSearchHomePage",
+    "Hash": "Fk38cqdpymkLxrM4XLeUzvaQy5v8PMc+Vu7VB4nKC/I+FRw1ztF36znXEWItVYdK",
+    "ConfigType": "ElasticSearchHomePage"
+  },
+  {
+    "Id": 8,
+    "Name": "RabbitMQ",
+    "Hash": "kp2L3gFjHrv4bjffRhaCcxN7S7wRGWbE122eqWvkpR6+lxsjood9FDeoSuJrCpnhXO92TAPrV1g92mQDO1TQTja7KbaCd7vePogorqCov75tjgvHoNKXU/g9LU5zc+K5Y0c3q9ByCWQFi1ZW/leNID3iGZG/4eDnw16xSPezb8E=",
+    "ConfigType": "RabbitMQ"
+  },
+  {
+    "Id": 9,
+    "Name": "RabbitMQHomePage",
+    "Hash": "xkZaHyf42PumGOgqFbd9T61JXowiRRp+Kwuhz/iNhD1bYddUlflaxtdoTjS8/mvrVjqnYZOpBAwJLUn/kvjMYK3MQbaqOSMdVDY85GNuf4skvYGIpTHOgm13B9j9NoebwK6bv+ilZ5qNQsffZNPyhSpBGp0XDhpBCRkQlLzuJAI=",
+    "ConfigType": "RabbitMQHomePage"
+  },
+  {
+    "Id": 10,
+    "Name": "MongoSettings",
+    "Hash": "V5k05eBTwvMhGWl/oMNWgSFBd2lpUtN4vQCs6IbSAkIcMiPME+jzAvvGIHQ/OmAmEyJNrcrB/eHglNXxyAd9xMghAtkK3d6sV25UBSfv96pRpEA2HgT604EncxlC9lee",
+    "ConfigType": "MongoSettings"
+  },
+  {
+    "Id": 11,
+    "Name": "RedisSettings",
+    "Hash": "BhN59DzavJNKhyaOqVhVyyxnTU4IhYs8bBLHKIJ53OESMTpVPxXAfRCN7slt9KoMhJJWVpb3yJrxqYI5AWLDioV9bj+CuUFGhkZkcIQ9kxk=",
+    "ConfigType": "RedisSettings"
+  },
+  {
+    "Id": 12,
+    "Name": "RedisHomePageSettings",
+    "Hash": "BhN59DzavJNKhyaOqVhVy05y3F0FB0qZkZTmh+hVELhrMpyKqTdp282JPsJxW2TMcPaw0k8UaS9NMUMz12GCUrRFm3UAFMQF9khly0qOBQg=",
+    "ConfigType": "RedisHomePageSettings"
+  },
+  {
+    "Id": 13,
+    "Name": "Jwt",
+    "Hash": "h/ASlQbt829xg6F38ZwOtW/D2VPwA05d5Q10Jpf3w1cHNKlj/7ECWiaHZ76/LyDKG24EWYj0E8eO4cXxpZrExYF0Sj1bSfDX/aHEO8WGxkKAd/FQ8TWX0Ygj90Yiy4J8LAlELJ6ATwF6YJHMr4sJnZmn4XssRbpSuSbkE1HyIG+Zx+kzWj1iB93cND/KNPdz",
+    "ConfigType": "Jwt"
+  },
+  {
+    "Id": 14,
+    "Name": "SmsCredentials",
+    "Hash": "LPnXdY+695jOdKsGKMq++lTCTwVBFrw0leMA99nisdpPgIlimIngj5HteRjicNxuWr9Lt5cLTgbau1pqiQYgCMqBe1VJi5mzaHgUspwJ+M9c09EtT8xFQJSwBifK2pDXgQ2fdgrx+eTKXxqJpfrh5ZvQFW91Tf2bI6NR1miG+IK1BrM7MO/rKQzkSRaRzZ+R7zTMn9Q0NqR7FMI49wsf2A==",
+    "ConfigType": "SmsCredentials"
+  },
+  {
+    "Id": 15,
+    "Name": "ElasticSearchLogUrl",
+    "Hash": "9DW3HWQ6xLpBSJTIj8/GyD8SoUcoz3zuWhG0mgQfvnQ6OJoD0D1taSfQ6B3hl1BiVhdBcPZEyVJldLsgv6cSDQ==",
+    "ConfigType": "ElasticSearchLogUrl"
+  }
+]

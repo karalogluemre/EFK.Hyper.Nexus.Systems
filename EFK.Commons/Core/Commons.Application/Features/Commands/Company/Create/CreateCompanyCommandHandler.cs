@@ -52,7 +52,7 @@ namespace Commons.Application.Features.Commands.Company.Create
 
                         foreach (var fileMeta in existingFileMetas)
                         {
-                            await this.mongoWriteRepository.DeleteFileAsync(fileMeta.ObjectId);
+                            await this.mongoWriteRepository.DeleteFileAsync<FileMetaData>(fileMeta.ObjectId.ToString());
                         }
 
                         if (existingFileMetas.Any())
@@ -68,12 +68,16 @@ namespace Commons.Application.Features.Commands.Company.Create
                 }
                 if (request.LogoUrl != null)
                 {
-                    var file = await this.mongoWriteRepository.UploadFileAsync(
-                        request.LogoUrl,
-                        Guid.Parse(request.Id),
-                        "Logo",
-                        company.GetType().Name
-                    );
+                    var file = await this.mongoWriteRepository.UploadFileAsync<FileMetaData>(new FileMetaData
+                    {
+                        FileName = request.LogoUrl.FileName,
+                        ContentType = request.LogoUrl.ContentType,
+                        UploadedAt = DateTime.UtcNow,
+                        ReferenceId = company.Id,
+                        ReferenceType = company.GetType().Name,
+                        Tag = "Logo",
+                        Description = request.LogoUrl.ContentDisposition
+                    });
 
                     var metadata = new FileMetaData
                     {

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\EFK.Commons\Core\Commons.Application\Commons.Application.csproj" />
+    <ProjectReference Include="..\EFK.System.Domain\EFK.System.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
